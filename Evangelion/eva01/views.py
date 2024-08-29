@@ -33,8 +33,7 @@ def hyoka(request, qpID, qID):
             
             if qID == QuestionPapers.objects.filter(qpID=qpID).last().qID:
                 request.session['test_state'] = 'completed'
-                request.session['test_state'].close()
-                return redirect('/')
+                return redirect('test_complete_page/')
         else:
             attemptData = userAttempts(
                 qpID = qpID,
@@ -92,3 +91,7 @@ def home(request):
         return redirect('hyoka', qpID=qpID, qID=qID)
     
     return render(request, "home.html")
+
+def test_complete_page(request):
+    
+    return render(request,"test_complete_page.html")

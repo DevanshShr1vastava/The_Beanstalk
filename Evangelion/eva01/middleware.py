@@ -2,14 +2,14 @@ from django.utils import timezone
 from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
 
+def auto_submit_test(request):
+    # Logic to automatically submit the test
+    request.session['test_state'] = 'completed'
+    # Save test results to the database
+    # Redirect to a results or thank you page
+    return redirect('test_complete_page')
 
 class TestTimerMiddleware(MiddlewareMixin):
-    def auto_submit_test(request):
-        # Logic to automatically submit the test
-        request.session['test_state'] = 'completed'
-        # Save test results to the database
-        # Redirect to a results or thank you page
-        return redirect('test_complete_page')
     
     def process_request(self, request):
         test_state = request.session.get('test_state')

@@ -1,5 +1,5 @@
 """
-URL configuration for Evangelion project.
+URL configuration for beanstalk project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -16,13 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from eva01.views import home,arena,hyoka,test_complete_page
+from app1.views import home,dashboard,mcq,about_us
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',home,name='homePage'),
-    path('arena/',arena,name='fightHere'),
-    path('hyoka/<int:qpID>/<int:qID>',hyoka,name="hyoka"),
-    path('arena/',arena,name='fightHere'),
-    path('test_complete_page/',test_complete_page,name='test_complete_page'),
-    
+    path("admin/", admin.site.urls),
+    path("",home,name="home"),
+    path("dashboard/",dashboard,name="dashboard"),
+    path("mcq/",mcq,name="mcq"),
+    path("about_us/",about_us,name="about_us")
 ]
