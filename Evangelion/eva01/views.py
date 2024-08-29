@@ -2,12 +2,20 @@ from django.shortcuts import redirect, render
 from .models import questionBank,QuestionPapers,userAttempts
 import pandas as pd
 import numpy as np
+from django.utils import timezone
+from datetime import timedelta
 from eva01.generateQP import generateQIDS
 
 # Create your views here.
+time_global = 30*60
 def hyoka(request, qpID, qID):
+    
+    if request.session.get('test_state') != 'in_progress':
+        return redirect('home')  # Redirect if no active test
+    
     QB = pd.DataFrame(questionBank.objects.all().values())
     question = QB.loc[QB['qID']== qID]
+    
     # print(question)
     if(request.method == "POST"):
         attemptInfo = request.POST
@@ -21,8 +29,12 @@ def hyoka(request, qpID, qID):
                 time_taken = attemptInfo.get('TT')
             )
             attemptData.save()
-
-            return redirect('/')
+                      
+            
+            if qID == QuestionPapers.objects.filter(qpID=qpID).last().qID:
+                request.session['test_state'] = 'completed'
+                request.session['test_state'].close()
+                return redirect('/')
         else:
             attemptData = userAttempts(
                 qpID = qpID,
@@ -38,7 +50,7 @@ def hyoka(request, qpID, qID):
 
             return redirect('hyoka',qpID=qpID,qID=subseqQid)
     
-    return render(request,'hyoka.html',{'question':question.to_dict})
+    return render(request,'hyoka.html',{'question':question.to_dict,"timer":time_global})
     
 
 
@@ -47,35 +59,36 @@ def arena(request):
     print(QB)
 
     questionPaper = generateQIDS(QB)
-
-    # CurrentQuestionPaper = QB[QB['qID'].isin(questionPaper)]
-    # currentQuestionPaperList = CurrentQuestionPaper.to_dict(orient="records")
     
-    if(QuestionPapers.objects.exists()):
+    if QuestionPapers.objects.exists():
         newQPid = QuestionPapers.objects.order_by('id').last().qpID + 1
-        for i in questionPaper:
-            paperQuestion = QuestionPapers(
-                qpID = newQPid,
-                qID = i
-            )
-            paperQuestion.save()
-        firstQID = QuestionPapers.objects.filter(qpID=newQPid).first().qID 
-        if(request.method == "POST"):
-            return redirect('hyoka',qpID=newQPid,qID=firstQID)    
     else:
-        for i in questionPaper:
-            paperQuestion = QuestionPapers(
-                qpID = 1,
-                qID = i
-            )
-            paperQuestion.save()
-        firstQID = QuestionPapers.objects.filter(qpID=1).first().qID 
-        if(request.method == "POST"):
-            return redirect('hyoka',qpID=1,qID=firstQID)    
+        newQPid = 1
+    
+    for i in questionPaper:
+        paperQuestion = QuestionPapers(
+            qpID=newQPid,
+            qID=i
+        )
+        paperQuestion.save()
 
-    return render(request,"arenaMain.html")
+    firstQID = QuestionPapers.objects.filter(qpID=newQPid).first().qID
+    
+    if request.method == "POST":
+        # Set session variables consistently before redirecting
+        request.session['test_state'] = 'in_progress'
+        request.session['test_qpID'] = newQPid
+        request.session['test_start_time'] = timezone.now().timestamp()
+        request.session['test_duration'] = time_global  # 30 minutes in seconds
+        return redirect('hyoka', qpID=newQPid, qID=firstQID)
+    
+    return render(request, "arenaMain.html")
 
 
 def home(request):
+    if request.session.get('test_state') == 'in_progress':
+        qpID = request.session.get('test_qpID')
+        qID = QuestionPapers.objects.filter(qpID=qpID).first().qID
+        return redirect('hyoka', qpID=qpID, qID=qID)
     
-    return render(request,"home.html")
+    return render(request, "home.html")
