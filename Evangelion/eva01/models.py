@@ -15,14 +15,14 @@ class questionBank(models.Model):
     domain = models.CharField(max_length=255)
     subdomain = models.CharField(max_length=255)
 
+class QuestionPapers(models.Model):
+    qpID = models.IntegerField()
+    qID = models.ForeignKey(questionBank,on_delete=models.CASCADE,related_name='queID')
 
 class userAttempts(models.Model):
-    qpID = models.IntegerField()
-    qID = models.IntegerField()
+    qpID = models.ForeignKey(QuestionPapers, on_delete = models.CASCADE, related_name='questionPaperID')
+    qID = models.ForeignKey(questionBank, on_delete=models.CASCADE, related_name='questionID')
     answer = models.IntegerField()
     marked_for_review = models.IntegerField()
     time_taken = models.IntegerField()
 
-class QuestionPapers(models.Model):
-    qpID = models.IntegerField()
-    qID = models.IntegerField()

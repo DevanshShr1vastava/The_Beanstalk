@@ -13,43 +13,43 @@ def hyoka(request, qpID, qID):
     if request.session.get('test_state') != 'in_progress':
         return redirect('home')  # Redirect if no active test
     
-    QB = pd.DataFrame(questionBank.objects.all().values())
-    question = QB.loc[QB['qID']== qID]
+    #fetch the question
+    question = questionBank.objects.filter(qID=qID).first()
+    current_QP = QuestionPapers.objects.filter(qpID=qpID, qID=qID).first()
     
-    # print(question)
+    if not question:
+        return redirect('home') #if question is not found, redirect to home
+    
     if(request.method == "POST"):
         attemptInfo = request.POST
-        print(attemptInfo)
-        if(qID == QuestionPapers.objects.filter(qpID=qpID).last().qID):
-            attemptData = userAttempts(
-                qpID = qpID,
-                qID = qID,
-                answer = attemptInfo.get('usrAnswer'),
-                marked_for_review = attemptInfo.get('mFr'),
-                time_taken = attemptInfo.get('TT')
-            )
-            attemptData.save()
-                      
-            
-            if qID == QuestionPapers.objects.filter(qpID=qpID).last().qID:
-                request.session['test_state'] = 'completed'
-                return redirect('test_complete_page/')
+        user_attempt = userAttempts(
+            qpID = current_QP,
+            qID = question,
+            answer = attemptInfo.get('usrAnswer'),
+            marked_for_review = attemptInfo.get('mFr'),
+            time_taken = attemptInfo.get('TT')
+        )
+        user_attempt.save()
+
+        #now checking whether current question is the last question in the question paper
+        last_question_id = QuestionPapers.objects.filter(qpID = qpID).order_by('qpID').last().qID
+
+        if(qID == last_question_id):
+            request.session['test_state'] = 'completed'
+            return redirect('test_complete_page/')
         else:
-            attemptData = userAttempts(
-                qpID = qpID,
-                qID = qID,
-                answer = attemptInfo.get('usrAnswer'),
-                marked_for_review = attemptInfo.get('mFr'),
-                time_taken = attemptInfo.get('TT')
-            )
-            attemptData.save()
-            curQ = QuestionPapers.objects.filter(qpID = qpID).filter(qID=qID).first()
+            #Get the next question in the paper
 
-            subseqQid = QuestionPapers.objects.filter(pk__gt = curQ.pk).order_by('pk').first().qID
-
-            return redirect('hyoka',qpID=qpID,qID=subseqQid)
+            cur_qp = QuestionPapers.objects.filter(qpID = qpID, qID=qID).first()
+            next_qp = QuestionPapers.objects.filter(qpID=qpID, pk__gt=cur_qp.pk).order_by('pk').first()
+            if(next_qp is None):
+                request.session['test_state'] = 'completed'
+                return redirect('test_complete_page')
+            else:
+                next_qID = next_qp.qID.qID
+                return redirect('hyoka',qpID=qpID, qID=next_qID)
     
-    return render(request,'hyoka.html',{'question':question.to_dict,"timer":time_global})
+    return render(request,'hyoka.html',{'question':question,"timer":time_global})
     
 
 
@@ -60,18 +60,20 @@ def arena(request):
     questionPaper = generateQIDS(QB)
     
     if QuestionPapers.objects.exists():
-        newQPid = QuestionPapers.objects.order_by('id').last().qpID + 1
+        newQPid = QuestionPapers.objects.order_by('qpID').last().qpID + 1
     else:
         newQPid = 1
     
-    for i in questionPaper:
-        paperQuestion = QuestionPapers(
+    for question in questionPaper:
+        question_obj = questionBank.objects.get(qID=question) #fetching the question object
+        paper_question = QuestionPapers(
             qpID=newQPid,
-            qID=i
+            qID=question_obj #saving question object in the QuestionPapers model
         )
-        paperQuestion.save()
+        paper_question.save()
 
-    firstQID = QuestionPapers.objects.filter(qpID=newQPid).first().qID
+    first_qp = QuestionPapers.objects.filter(qpID=newQPid).first()
+    firstQID = first_qp.qID.qID if first_qp else None # Fetch the qID of the first question
     
     if request.method == "POST":
         # Set session variables consistently before redirecting
