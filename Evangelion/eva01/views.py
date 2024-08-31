@@ -16,7 +16,18 @@ def hyoka(request, qpID, qID):
     #fetch the question
     question = questionBank.objects.filter(qID=qID).first()
     current_QP = QuestionPapers.objects.filter(qpID=qpID, qID=qID).first()
-    
+
+      # Get the total number of questions in the paper
+    total_questions = QuestionPapers.objects.filter(qpID=qpID).count()
+    print(total_questions)
+    # Get the number of questions already attempted by the user
+    questions_completed = userAttempts.objects.filter(qpID__qpID=qpID).count()
+    print(questions_completed)
+    progress = total_questions-questions_completed
+    print(progress)
+
+    progress_percent = 100 - round(((progress - 1) / total_questions) * 100)
+    print(progress_percent)
     if not question:
         return redirect('home') #if question is not found, redirect to home
     
@@ -49,7 +60,7 @@ def hyoka(request, qpID, qID):
                 next_qID = next_qp.qID.qID
                 return redirect('hyoka',qpID=qpID, qID=next_qID)
     
-    return render(request,'hyoka.html',{'question':question,"timer":time_global})
+    return render(request,'hyoka.html',{'question':question,"timer":time_global,"progress":progress_percent,"total_questions":total_questions})
     
 
 
