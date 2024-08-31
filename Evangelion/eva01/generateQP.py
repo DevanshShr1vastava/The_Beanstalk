@@ -38,8 +38,6 @@ def generateQIDS(QuestionBank):
                 weights[subdomain] = 1
         return weights
 
-
-
     # Add weight column to DataFrame
     subdomainQB_difficulty['weight'] = subdomainQB_difficulty['subdomain'].map(weights)
 
