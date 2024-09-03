@@ -22,7 +22,6 @@ urlpatterns = [
     path('',home,name='homePage'),
     path('arena/',arena,name='fightHere'),
     path('hyoka/<int:qpID>/<int:qID>',hyoka,name="hyoka"),
-    path('arena/',arena,name='fightHere'),
     path('test_complete_page/',test_complete_page,name='test_complete_page'),
     
 ]
