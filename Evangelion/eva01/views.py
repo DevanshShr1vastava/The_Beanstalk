@@ -1,11 +1,11 @@
+from collections import defaultdict
 from django.shortcuts import redirect, render
 from .models import questionBank,QuestionPapers,userAttempts
 import pandas as pd
 import numpy as np
 from django.utils import timezone
 from datetime import timedelta
-from eva01.generateQP import generateQIDS
-
+from eva01.generateQP import generateQIDS,analyse_usr
 # Create your views here.
 time_global = 30*60
 def hyoka(request, qpID, qID):
@@ -19,24 +19,32 @@ def hyoka(request, qpID, qID):
 
       # Get the total number of questions in the paper
     total_questions = QuestionPapers.objects.filter(qpID=qpID).count()
-    print(total_questions)
+
     # Get the number of questions already attempted by the user
     questions_completed = userAttempts.objects.filter(qpID__qpID=qpID).count()
-    print(questions_completed)
+  
     progress = total_questions-questions_completed
-    print(progress)
+  
 
     progress_percent = 100 - round(((progress - 1) / total_questions) * 100)
-    print(progress_percent)
+    
     if not question:
         return redirect('home') #if question is not found, redirect to home
     
     if(request.method == "POST"):
         attemptInfo = request.POST
+        
+        if(int(attemptInfo.get('usrAnswer'))==int(question.option_number)):
+            usr_ans = 1
+            
+        else:
+            usr_ans = 0
+        
+        print(usr_ans)
         user_attempt = userAttempts(
             qpID = current_QP,
             qID = question,
-            answer = attemptInfo.get('usrAnswer'),
+            answer = usr_ans,
             marked_for_review = attemptInfo.get('mFr'),
             time_taken = attemptInfo.get('TT')
         )
@@ -66,7 +74,6 @@ def hyoka(request, qpID, qID):
 
 def arena(request):
     QB = pd.DataFrame(questionBank.objects.all().values())
-    print(QB)
 
     questionPaper = generateQIDS(QB)
     
@@ -96,13 +103,36 @@ def arena(request):
     
     return render(request, "arenaMain.html")
 
+def analyse(request):
+    usratmpts = pd.DataFrame(userAttempts.objects.all().values()).groupby('qID_id').agg(
+            attempts=('answer',list),
+            marked_for_review = ('marked_for_review','first'),
+            time_taken=('time_taken','first'),
+            answer = ('answer','first')
+        ).reset_index()
+    print(usratmpts)
+    analysis_result = analyse_usr(usratmpts)
+
+    print(analysis_result['subdomain'].to_list())
+    print(analysis_result['category_encoded'].to_list())
+
+    weight_dict = dict(zip(analysis_result['subdomain'].to_list(),analysis_result['category_encoded'].to_list()))
+    print(type(weight_dict))
+    QB = pd.DataFrame(questionBank.objects.all().values())
+    new_QIDS_non_weighted = generateQIDS(QB)
+    new_QIDS = generateQIDS(QB,weight_dict)
+    print("New QIDS unweighted")
+    print(new_QIDS_non_weighted)
+    print("New QIDS weighted")
+    print(new_QIDS)
+    return render(request, "analysis.html")
 
 def home(request):
     if request.session.get('test_state') == 'in_progress':
         qpID = request.session.get('test_qpID')
         qID = QuestionPapers.objects.filter(qpID=qpID).first().qID
         return redirect('hyoka', qpID=qpID, qID=qID)
-    
+     
     return render(request, "home.html")
 
 def test_complete_page(request):

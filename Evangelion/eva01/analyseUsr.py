@@ -2,7 +2,8 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
-import random
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
 
 def calculate_correctness_rate(user_attempts):
     correct_answers = sum(user_attempts)
@@ -38,7 +39,7 @@ def determine_label(row):
 #GENERATING A SAMPLE DATASET TO TRAIN THE MODEL AND TEST THE MODEL
 ################################################
 np.random.seed(42)
-QuestionBank = pd.read_csv('questionBank.csv')
+QuestionBank = pd.read_csv('D:\Code\College Stuff\BeanstalkYetAgain\Evangelion\eva01\questionBank.csv')
 
 qb_dbms_df = QuestionBank[QuestionBank['domain']=='DBMS']
 qb_dsa_df = QuestionBank[QuestionBank['domain']=='DSA']
@@ -124,7 +125,7 @@ X = df.drop(columns=['label', 'user_id', 'question_id', 'domain', 'subdomain'])
 y = df['label']
 
 # Split the data into training and test sets
-from sklearn.model_selection import train_test_split
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=34)
 
 # Feature scaling
@@ -136,22 +137,81 @@ X_test_scaled = scaler.transform(X_test)
 knn = KNeighborsClassifier(n_neighbors=5, weights='distance')
 knn.fit(X_train_scaled, y_train)
 
+##########################################################################################################################
 # New input data
-new_data = pd.DataFrame({
-    'attempt_number': [1],
-    'time_taken': [85],
-    'answer': [1],
-    'marked_for_review': [1],
-    'correctness_rate': [0.7],
-    'confidence_level': [3]
-})
+# new_data = pd.DataFrame({
+#     'attempt_number': [1],
+#     'time_taken': [85],
+#     'answer': [1],
+#     'marked_for_review': [1],
+#     'correctness_rate': [0.7],
+#     'confidence_level': [3]
+# })
 
-# Scale the new data using the same scaler
-new_data_scaled = scaler.transform(new_data)
+# # Scale the new data using the same scaler
+# new_data_scaled = scaler.transform(new_data)
 
-# Predict using the model
-prediction = knn.predict(new_data_scaled)
+# # Predict using the model
+# prediction = knn.predict(new_data_scaled)
 
-# Print the result
-print(f'Predicted label for the new input: {prediction[0]}')
+# # Print the result
+# print(f'Predicted label for the new input: {prediction[0]}')
+##########################################################################################################################
 
+#Category assign function based on percentage of repeat same type of question
+def assign_category(row):
+    # Extract the percentage of repeats
+    percent_repeat = row['percent_repeat']
+    
+    # Define thresholds for categorization
+    if percent_repeat > 60:
+        return 2
+    elif percent_repeat < 50:
+        return 0
+    else:
+        return 1
+
+
+# Select the specified columns
+selected_columns = ['user_id', 'question_id', 'domain', 'subdomain', 'label']
+df_selected = df[selected_columns]
+
+# Print the selected DataFrame
+# print(df_selected)
+
+# Calculate percentages for each subdomain
+subdomain_stats = df_selected.groupby('subdomain')['label'].agg(['mean', 'count']).reset_index()
+subdomain_stats['percent_repeat'] = subdomain_stats['mean'] * 100
+
+subdomain_stats['category'] = subdomain_stats.apply(assign_category, axis=1)
+
+# print(subdomain_stats)
+
+# The new dataset
+classified_data = subdomain_stats[['subdomain', 'category']]
+
+# print(classified_data)
+
+
+
+# Encoding the categories
+label_encoder = LabelEncoder()
+classified_data.loc[:,'category_encoded'] = label_encoder.fit_transform(classified_data['category'])
+print (classified_data)
+# Features and labels
+X = subdomain_stats[['percent_repeat']]
+y = classified_data['category_encoded']
+
+# Split the data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=47)
+
+# Train Weighted KNN
+knn_model = KNeighborsClassifier(weights='distance')
+knn_model.fit(X_train, y_train)
+
+# Evaluate the models
+
+# knn_accuracy = knn_model.score(X_test, y_test)
+
+
+# print(f'\nWeighted KNN Accuracy: {knn_accuracy}')

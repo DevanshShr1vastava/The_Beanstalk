@@ -1,0 +1,317 @@
+qID,questions,op1,op2,op3,op4,Correct Answer,option_number,difficulty,domain,subdomain
+1,What is the time complexity of binary search algorithm?,O(n),O(log n),O(n^2),O(n log n),O(log n),2,Easy,DSA,Searching
+2,Which data structure is used for implementing LIFO order?,Queue,Stack,Array,LinkedList,Stack,2,Easy,DSA,Stack
+3,Which of the following is not a stable sorting algorithm?,Merge Sort,Quick Sort,Bubble Sort,Insertion Sort,Quick Sort,2,Medium,DSA,Sorting
+4,What is the worst-case time complexity of bubble sort?,O(n),O(n log n),O(n^2),O(n^3),O(n^2),3,Easy,DSA,Sorting
+5,Which data structure is used for implementing FIFO order?,Stack,Queue,Tree,Graph,Queue,2,Easy,DSA,Queue
+6,What is the space complexity of a breadth-first search (BFS) algorithm?,O(1),O(n),O(n^2),O(V + E),O(V + E),4,Medium,DSA,Graph
+7,"In a max-heap, the parent node is always ______ than the child nodes.",Smaller,Equal,Greater,Unrelated,Greater,3,Easy,DSA,Heap
+8,Which traversal algorithm is used in Depth-First Search (DFS)?,In-order,Pre-order,Post-order,Breadth-first,Pre-order,2,Medium,DSA,Tree
+9,What is the height of a balanced binary search tree (BST) with n nodes?,O(n),O(log n),O(n^2),O(n log n),O(log n),2,Medium,DSA,Tree
+10,What does the term 'backtracking' refer to in algorithms?,Going forward to the next step,Revisiting previous steps and decisions,Skipping intermediate steps,Terminating early,Revisiting previous steps and decisions,2,Hard,DSA,Algorithms
+11,What is the best-case time complexity of quick sort?,O(n),O(n log n),O(n^2),O(log n),O(n log n),2,Medium,DSA,Sorting
+12,Which of the following is a self-balancing binary search tree?,Binary Search Tree (BST),Binary Tree,B-Tree,AVL Tree,AVL Tree,4,Medium,DSA,Tree
+13,What data structure is used in implementing priority queues?,Array,Stack,Heap,LinkedList,Heap,3,Medium,DSA,Heap
+14,What is the time complexity of searching an element in a hash table?,O(1),O(log n),O(n),O(n log n),O(1),1,Medium,DSA,Hashing
+15,Which of the following is a non-linear data structure?,Array,Linked List,Stack,Graph,Graph,4,Easy,DSA,Graph
+16,What is the time complexity for inserting an element in a stack?,O(1),O(log n),O(n),O(n^2),O(1),1,Easy,DSA,Stack
+17,Which algorithm is used to find the shortest path in a graph?,Merge Sort,Quick Sort,Dijkstra's Algorithm,Bubble Sort,Dijkstra's Algorithm,3,Medium,DSA,Graph
+18,Which of the following data structures provides fast access using keys?,Array,Linked List,Hash Table,Queue,Hash Table,3,Medium,DSA,Hashing
+19,"In a binary search tree (BST), the parent node is always ______ than the child nodes.",Less than the node,Greater than the node,Equal to the node,None of the above,Less than the node,1,Easy,DSA,Tree
+20,Which sorting algorithm is the fastest for large data sets?,Bubble Sort,Insertion Sort,Merge Sort,Quick Sort,Quick Sort,4,Hard,DSA,Sorting
+21,What is the time complexity of inserting an element into an AVL tree?,O(1),O(log n),O(n),O(n^2),O(log n),2,Medium,DSA,Tree
+22,Which traversal method is used to get the nodes of a binary search tree in ascending order?,Pre-order,Post-order,In-order,Level-order,In-order,3,Medium,DSA,Tree
+23,Which of the following is not a type of linked list?,Singly Linked List,Doubly Linked List,Circular Linked List,Hash Linked List,Hash Linked List,4,Easy,DSA,Linked List
+24,What is the space complexity of the merge sort algorithm?,O(1),O(n),O(n log n),O(n^2),O(n),2,Medium,DSA,Sorting
+25,Which data structure is used for managing function calls in recursion?,Queue,Stack,Array,LinkedList,Stack,2,Easy,DSA,Stack
+26,What is the worst-case time complexity for finding an element in a binary search tree?,O(1),O(log n),O(n),O(n log n),O(n),3,Medium,DSA,Tree
+27,"In a circular queue, how do you determine if the queue is full?",front == rear,front == rear + 1,front + 1 == rear,rear == size - 1,front == rear + 1,2,Medium,DSA,Queue
+28,Which of the following is a greedy algorithm?,Bubble Sort,Dijkstra's Algorithm,Merge Sort,Quick Sort,Dijkstra's Algorithm,2,Medium,DSA,Algorithms
+29,What is the primary use of a hash function?,Compression,Encryption,Mapping keys to values,Sorting,Mapping keys to values,3,Easy,DSA,Hashing
+30,"In a red-black tree, what is the maximum number of rotations needed to balance the tree after an insertion?",1,2,3,4,2,2,Hard,DSA,Tree
+31,Which data structure is used in a breadth-first search (BFS) algorithm?,Stack,Queue,Array,LinkedList,Queue,2,Medium,DSA,Graph
+32,What is the time complexity of the depth-first search (DFS) algorithm in a graph with V vertices and E edges?,O(V + E),O(V^2),O(VE),O(V + E log V),O(V + E),1,Medium,DSA,Graph
+33,Which of the following sorting algorithms has the best average case time complexity?,Bubble Sort,Insertion Sort,Selection Sort,Merge Sort,Merge Sort,4,Medium,DSA,Sorting
+34,"In a max-heap, what is the time complexity of extracting the maximum element?",O(1),O(log n),O(n),O(n log n),O(log n),2,Medium,DSA,Heap
+35,What is the main advantage of a doubly linked list over a singly linked list?,Simplicity,Memory usage,Bidirectional traversal,Performance,Bidirectional traversal,3,Medium,DSA,Linked List
+36,Which of the following is a divide-and-conquer algorithm?,Bubble Sort,Quick Sort,Insertion Sort,Selection Sort,Quick Sort,2,Medium,DSA,Algorithms
+37,What is the time complexity of searching for an element in a balanced binary search tree?,O(1),O(log n),O(n),O(n^2),O(log n),2,Medium,DSA,Tree
+38,Which of the following data structures is used to implement the undo feature in most software?,Queue,Stack,Array,LinkedList,Stack,2,Easy,DSA,Stack
+39,What is the worst-case time complexity of the quicksort algorithm?,O(n),O(n log n),O(n^2),O(log n),O(n^2),3,Hard,DSA,Sorting
+40,Which of the following is an application of the stack data structure?,Depth-first search,Breadth-first search,Priority queue,Hashing,Depth-first search,1,Medium,DSA,Stack
+41,"Which of the following data structures allows insertion, deletion, and traversal in O(1) time on average?",Array,Stack,Queue,Hash Table,Hash Table,4,Medium,DSA,Hashing
+42,What is the primary disadvantage of a singly linked list over a doubly linked list?,Memory usage,Complexity,Unidirectional traversal,Performance,Unidirectional traversal,3,Medium,DSA,Linked List
+43,What is the worst-case time complexity of merge sort?,O(n),O(n log n),O(n^2),O(log n),O(n log n),2,Medium,DSA,Sorting
+44,Which data structure is used for implementing a priority queue?,Stack,Queue,Heap,LinkedList,Heap,3,Medium,DSA,Heap
+45,What is the time complexity of deleting a node from a binary search tree?,O(1),O(log n),O(n),O(n^2),O(log n),2,Medium,DSA,Tree
+46,Which of the following is an example of a self-adjusting data structure?,Binary Search Tree (BST),AVL Tree,Red-Black Tree,Splay Tree,Splay Tree,4,Hard,DSA,Tree
+47,What is the primary purpose of a hash table?,Searching,Sorting,Storing key-value pairs,Traversal,Storing key-value pairs,3,Easy,DSA,Hashing
+48,Which of the following algorithms is used to detect cycles in a graph?,Bubble Sort,Depth-first search,Merge Sort,Quick Sort,Depth-first search,2,Medium,DSA,Graph
+49,"In a binary heap, the root node is the ________ element in the heap.",Smallest,Largest,Middle,Last,Largest,2,Easy,DSA,Heap
+50,What is the average-case time complexity of searching in a hash table?,O(1),O(log n),O(n),O(n^2),O(1),1,Medium,DSA,Hashing
+51,Which of the following is a characteristic of a red-black tree?,All nodes are black,All nodes are red,No two red nodes can be adjacent,All leaves are at the same level,No two red nodes can be adjacent,3,Hard,DSA,Tree
+52,What is the worst-case time complexity of inserting an element into a binary heap?,O(1),O(log n),O(n),O(n log n),O(log n),2,Medium,DSA,Heap
+53,Which data structure is used to perform recursion internally?,Queue,Stack,Array,LinkedList,Stack,2,Easy,DSA,Stack
+54,What is the primary advantage of using a linked list over an array?,Speed,Memory usage,Dynamic size,Indexing,Dynamic size,3,Easy,DSA,Linked List
+55,Which of the following algorithms is used for finding the shortest path in a weighted graph?,Bubble Sort,Depth-first search,Floyd-Warshall Algorithm,Quick Sort,Floyd-Warshall Algorithm,3,Hard,DSA,Graph
+56,What is the time complexity of inserting an element at the end of a singly linked list?,O(1),O(log n),O(n),O(n^2),O(n),3,Medium,DSA,Linked List
+57,Which of the following is not a characteristic of a binary search tree?,The left subtree contains only nodes with keys less than the parent node,The right subtree contains only nodes with keys greater than the parent node,Each node has at most two children,All nodes are at the same level,All nodes are at the same level,4,Easy,DSA,Tree
+58,What is the average-case time complexity of the quicksort algorithm?,O(n),O(n log n),O(n^2),O(log n),O(n log n),2,Medium,DSA,Sorting
+59,"In a binary tree, which traversal method visits the root node first?",In-order,Pre-order,Post-order,Level-order,Pre-order,2,Easy,DSA,Tree
+60,What is the main advantage of a circular linked list over a singly linked list?,Simplicity,Memory usage,Efficient traversal,Bidirectional traversal,Efficient traversal,3,Medium,DSA,Linked List
+61,Which of the following sorting algorithms is not comparison-based?,Bubble Sort,Merge Sort,Radix Sort,Quick Sort,Radix Sort,3,Hard,DSA,Sorting
+62,What is the time complexity of accessing an element in an array by index?,O(1),O(log n),O(n),O(n^2),O(1),1,Easy,DSA,Array
+63,Which data structure is used for evaluating arithmetic expressions written in postfix notation?,Queue,Stack,Array,LinkedList,Stack,2,Medium,DSA,Stack
+64,What is the primary disadvantage of using a linked list over an array?,Speed,Memory usage,Dynamic size,Indexing,Indexing,4,Medium,DSA,Linked List
+65,Which of the following algorithms is used to sort a linked list in O(n log n) time?,Bubble Sort,Insertion Sort,Selection Sort,Merge Sort,Merge Sort,4,Hard,DSA,Sorting
+66,What is the space complexity of the quicksort algorithm?,O(1),O(log n),O(n),O(n log n),O(log n),2,Medium,DSA,Sorting
+67,Which of the following data structures is used for implementing a depth-first search (DFS) algorithm?,Queue,Stack,Array,LinkedList,Stack,2,Medium,DSA,Graph
+68,"In a binary search tree, what is the time complexity of finding the minimum element?",O(1),O(log n),O(n),O(n^2),O(log n),2,Medium,DSA,Tree
+69,Which of the following is an application of a priority queue?,Implementing stacks,Implementing queues,Task scheduling,Data encryption,Task scheduling,3,Medium,DSA,Queue
+70,What is the primary purpose of a hash function in a hash table?,Compression,Encryption,Mapping keys to values,Sorting,Mapping keys to values,3,Easy,DSA,Hashing
+71,What is the time complexity of deleting an element from a singly linked list if the pointer to the node is given?,O(1),O(log n),O(n),O(n^2),O(1),1,Medium,DSA,Linked List
+72,Which of the following algorithms is used to find the minimum spanning tree in a graph?,Bubble Sort,Depth-first search,Kruskal's Algorithm,Quick Sort,Kruskal's Algorithm,3,Hard,DSA,Graph
+73,What is the worst-case time complexity of searching for an element in a hash table with separate chaining?,O(1),O(log n),O(n),O(n log n),O(n),3,Hard,DSA,Hashing
+74,"In a binary heap, what is the time complexity of inserting a new element?",O(1),O(log n),O(n),O(n log n),O(log n),2,Medium,DSA,Heap
+75,Which of the following is a characteristic of a B-tree?,All nodes are black,All nodes are red,All leaves are at the same level,No two red nodes can be adjacent,All leaves are at the same level,3,Hard,DSA,Tree
+76,What is the time complexity of accessing an element in a hash table by key?,O(1),O(log n),O(n),O(n^2),O(1),1,Easy,DSA,Hashing
+77,Which of the following is an application of the breadth-first search (BFS) algorithm?,Finding the shortest path in an unweighted graph,Finding the longest path in a weighted graph,Sorting elements,Data encryption,Finding the shortest path in an unweighted graph,1,Medium,DSA,Graph
+78,"In a linked list, what is the time complexity of inserting a new element at the beginning?",O(1),O(log n),O(n),O(n^2),O(1),1,Easy,DSA,Linked List
+79,Which of the following is not a type of binary tree traversal?,In-order,Pre-order,Post-order,Reverse-order,Reverse-order,4,Easy,DSA,Tree
+80,What is the primary advantage of a binary search tree over a hash table?,Speed,Memory usage,Ordered data,Dynamic size,Ordered data,3,Medium,DSA,Tree
+81,What is the worst-case time complexity of the merge sort algorithm?,O(n),O(n log n),O(n^2),O(log n),O(n log n),2,Medium,DSA,Sorting
+82,Which data structure is used to store the directory structure of a file system?,Queue,Stack,Tree,LinkedList,Tree,3,Medium,DSA,Tree
+83,What is the primary use of a priority queue?,Sorting elements,Storing elements,Retrieving the minimum or maximum element,Traversal,Retrieving the minimum or maximum element,3,Medium,DSA,Queue
+84,What is the time complexity of finding the height of a binary tree?,O(1),O(log n),O(n),O(n log n),O(n),3,Medium,DSA,Tree
+85,Which of the following is a self-adjusting binary search tree?,Binary Search Tree (BST),AVL Tree,Red-Black Tree,Splay Tree,Splay Tree,4,Hard,DSA,Tree
+86,What is the average-case time complexity of the insertion sort algorithm?,O(1),O(log n),O(n),O(n^2),O(n^2),4,Medium,DSA,Sorting
+87,Which of the following data structures is used to implement recursion?,Queue,Stack,Array,LinkedList,Stack,2,Easy,DSA,Stack
+88,What is the primary disadvantage of a binary search tree?,Speed,Memory usage,Dynamic size,Imbalance,Imbalance,4,Medium,DSA,Tree
+89,What is the time complexity of accessing an element in a stack?,O(1),O(log n),O(n),O(n^2),O(1),1,Easy,DSA,Stack
+90,Which of the following is an example of a self-balancing binary search tree?,Binary Search Tree (BST),Binary Tree,B-Tree,AVL Tree,AVL Tree,4,Medium,DSA,Tree
+91,What is the time complexity of the bubble sort algorithm in the best case?,O(1),O(log n),O(n),O(n^2),O(n),3,Medium,DSA,Sorting
+92,Which data structure is used to reverse a string efficiently?,Queue,Stack,Array,LinkedList,Stack,2,Medium,DSA,Stack
+93,What is the primary advantage of a doubly linked list over a singly linked list?,Speed,Memory usage,Bidirectional traversal,Performance,Bidirectional traversal,3,Medium,DSA,Linked List
+94,What is the worst-case time complexity of the insertion sort algorithm?,O(1),O(log n),O(n),O(n^2),O(n^2),4,Medium,DSA,Sorting
+95,Which of the following data structures is used to implement a queue?,Stack,Queue,Array,LinkedList,Array,3,Medium,DSA,Queue
+96,What is the time complexity of deleting an element from a binary search tree?,O(1),O(log n),O(n),O(n^2),O(log n),2,Medium,DSA,Tree
+97,Which of the following is a stable sorting algorithm?,Quick Sort,Merge Sort,Heap Sort,Selection Sort,Merge Sort,2,Medium,DSA,Sorting
+98,Which of the following data structures does not allow random access?,Array,Linked List,Hash Table,Stack,Linked List,2,Easy,DSA,Linked List
+99,What is the worst-case time complexity of the heap sort algorithm?,O(n),O(n log n),O(n^2),O(log n),O(n log n),2,Medium,DSA,Sorting
+100,Which traversal technique is used in depth-first search (DFS) of a graph?,Level-order,Pre-order,In-order,Post-order,Pre-order,2,Medium,DSA,Graph
+101,What is the primary advantage of using a hash table?,Speed,Memory usage,Ordered data,Dynamic size,Speed,1,Easy,DSA,Hashing
+102,Which of the following is not a characteristic of an AVL tree?,Balanced height,Each node has at most two children,Height difference between left and right subtrees is at most 1,All nodes are red,All nodes are red,4,Hard,DSA,Tree
+103,What is the time complexity of finding the maximum element in a max-heap?,O(1),O(log n),O(n),O(n log n),O(1),1,Medium,DSA,Heap
+104,Which data structure is best suited for implementing an undo mechanism in a text editor?,Queue,Stack,Array,Linked List,Stack,2,Medium,DSA,Stack
+105,What is the primary use of a circular buffer?,Sorting elements,Storing elements,Fixed-size queue,Traversal,Fixed-size queue,3,Medium,DSA,Queue
+106,What is the worst-case time complexity of the binary search algorithm?,O(1),O(log n),O(n),O(n log n),O(log n),2,Medium,DSA,Searching
+107,Which of the following sorting algorithms has the best average-case time complexity?,Bubble Sort,Quick Sort,Merge Sort,Selection Sort,Merge Sort,3,Medium,DSA,Sorting
+108,What is the space complexity of a stack implemented using an array?,O(1),O(log n),O(n),O(n^2),O(n),3,Easy,DSA,Stack
+109,Which of the following is a characteristic of a full binary tree?,All nodes have either 0 or 2 children,All nodes have 2 children,All nodes are leaf nodes,All nodes have at least 1 child,All nodes have either 0 or 2 children,1,Medium,DSA,Tree
+110,What is the time complexity of deleting an element from a doubly linked list if the pointer to the node is given?,O(1),O(log n),O(n),O(n^2),O(1),1,Medium,DSA,Linked List
+111,Which of the following algorithms is used for finding the strongly connected components of a graph?,Bubble Sort,Depth-first search,Kruskals Algorithm,Tarjan's Algorithm,Tarjan's Algorithm,4,Hard,DSA,Graph
+112,What is the primary disadvantage of a hash table with open addressing?,Complexity,Memory usage,Clustering,Performance,Clustering,3,Medium,DSA,Hashing
+113,"Which of the following data structures allows insertion, deletion, and retrieval in O(1) time?",Array,Stack,Queue,Hash Table,Hash Table,4,Medium,DSA,Hashing
+114,What is the time complexity of finding the predecessor of a node in a binary search tree?,O(1),O(log n),O(n),O(n log n),O(log n),2,Medium,DSA,Tree
+115,Which of the following is an application of the depth-first search (DFS) algorithm?,Finding the shortest path in an unweighted graph,Finding the longest path in a weighted graph,Topological sorting,Data encryption,Topological sorting,3,Medium,DSA,Graph
+116,What is the average-case time complexity of the merge sort algorithm?,O(n),O(n log n),O(n^2),O(log n),O(n log n),2,Medium,DSA,Sorting
+117,Which of the following data structures is used to implement a deque?,Stack,Queue,Array,Linked List,Linked List,4,Medium,DSA,Queue
+118,What is the primary advantage of using a binary heap over an array?,Speed,Memory usage,Dynamic size,Efficient retrieval of the minimum or maximum element,Efficient retrieval of the minimum or maximum element,4,Medium,DSA,Heap
+119,What is the worst-case time complexity of the selection sort algorithm?,O(1),O(log n),O(n),O(n^2),O(n^2),4,Medium,DSA,Sorting
+120,"Which data structure is used to implement a LIFO (Last In, First Out) order?",Queue,Stack,Array,Linked List,Stack,2,Easy,DSA,Stack
+121,What is the primary use of a hash function in a hash table?,Searching,Sorting,Storing key-value pairs,Traversal,Storing key-value pairs,3,Easy,DSA,Hashing
+122,Which of the following algorithms is used for sorting linked lists efficiently?,Bubble Sort,Insertion Sort,Selection Sort,Merge Sort,Merge Sort,4,Hard,DSA,Sorting
+123,What is the time complexity of accessing an element in a queue implemented using an array?,O(1),O(log n),O(n),O(n^2),O(1),1,Easy,DSA,Queue
+124,Which of the following data structures is best suited for implementing a priority queue?,Stack,Queue,Heap,Linked List,Heap,3,Medium,DSA,Heap
+125,What is the space complexity of a queue implemented using a linked list?,O(1),O(log n),O(n),O(n^2),O(n),3,Medium,DSA,Queue
+126,Which of the following is not a characteristic of a binary heap?,Complete binary tree,All levels are filled except possibly the last,Leaf nodes are all at the same level,Every parent node is greater than or equal to its children in a max-heap,Leaf nodes are all at the same level,3,Medium,DSA,Heap
+127,What is the time complexity of deleting an element from a max-heap?,O(1),O(log n),O(n),O(n log n),O(log n),2,Medium,DSA,Heap
+128,Which of the following algorithms is used to find the shortest path in an unweighted graph?,Bubble Sort,Depth-first search,Breadth-first search,Quick Sort,Breadth-first search,3,Medium,DSA,Graph
+129,What is the primary disadvantage of using an array over a linked list?,Speed,Memory usage,Dynamic size,Indexing,Dynamic size,3,Medium,DSA,Array
+130,Which data structure is used to implement a breadth-first search (BFS) algorithm?,Stack,Queue,Array,Linked List,Queue,2,Medium,DSA,Graph
+131,What is the time complexity of accessing an element in a circular linked list?,O(1),O(log n),O(n),O(n^2),O(n),3,Medium,DSA,Linked List
+132,Which of the following is a characteristic of a complete binary tree?,All levels are completely filled,All nodes are either 0 or 2 children,All nodes are red,All leaves are at the same level,All levels are completely filled,1,Easy,DSA,Tree
+133,Which of the following data structures is used to implement a stack?,Stack,Queue,Array,Linked List,Array,3,Medium,DSA,Stack
+134,What is the worst-case time complexity of the bubble sort algorithm?,O(1),O(log n),O(n),O(n^2),O(n^2),4,Medium,DSA,Sorting
+135,Which data structure is used to store the call stack of a program?,Queue,Stack,Array,Linked List,Stack,2,Easy,DSA,Stack
+136,What is the time complexity of accessing an element in a binary search tree?,O(1),O(log n),O(n),O(n^2),O(log n),2,Medium,DSA,Tree
+137,Which of the following is an application of the queue data structure?,Function call management,Task scheduling,Priority queue,Depth-first search,Task scheduling,2,Medium,DSA,Queue
+138,What is the space complexity of the insertion sort algorithm?,O(1),O(log n),O(n),O(n^2),O(1),1,Medium,DSA,Sorting
+139,Which of the following data structures allows insertion and deletion at both ends?,Stack,Queue,Deque,Linked List,Deque,3,Medium,DSA,Queue
+140,What is the time complexity of finding the minimum element in a binary search tree?,O(1),O(log n),O(n),O(n^2),O(log n),2,Medium,DSA,Tree
+141,Which of the following algorithms is used to sort an array in O(n log n) time?,Bubble Sort,Quick Sort,Selection Sort,Insertion Sort,Quick Sort,2,Medium,DSA,Sorting
+142,Which of the following is a balanced binary search tree?,Binary Search Tree (BST),AVL Tree,B-Tree,Red-Black Tree,AVL Tree,2,Medium,DSA,Tree
+143,What is the time complexity of inserting an element into a red-black tree?,O(1),O(log n),O(n),O(n^2),O(log n),2,Medium,DSA,Tree
+144,Which of the following sorting algorithms is not stable?,Bubble Sort,Merge Sort,Heap Sort,Insertion Sort,Heap Sort,3,Medium,DSA,Sorting
+145,Which of the following data structures is used to implement a breadth-first search (BFS) algorithm?,Stack,Queue,Array,Linked List,Queue,2,Medium,DSA,Graph
+146,What is the primary use of a hash table?,Sorting,Storing key-value pairs,Traversal,Indexing,Storing key-value pairs,2,Easy,DSA,Hashing
+147,What is the time complexity of finding the height of a binary search tree?,O(1),O(log n),O(n),O(n log n),O(n),3,Medium,DSA,Tree
+148,What is the primary advantage of using a binary heap?,Speed,Memory usage,Dynamic size,Efficient retrieval of the minimum or maximum element,Efficient retrieval of the minimum or maximum element,4,Medium,DSA,Heap
+149,What is the time complexity of inserting an element into a max-heap?,O(1),O(log n),O(n),O(n log n),O(log n),2,Medium,DSA,Heap
+150,Which of the following data structures is used to implement a priority queue?,Stack,Queue,Heap,Linked List,Heap,3,Medium,DSA,Heap
+151,What is the time complexity of inserting an element into a binary search tree in the average case?,O(1),O(log n),O(n),O(n log n),O(log n),2,Medium,DSA,Tree
+152,Which of the following sorting algorithms is the most efficient for large datasets?,Bubble Sort,Selection Sort,Quick Sort,Insertion Sort,Quick Sort,3,Hard,DSA,Sorting
+153,Which data structure is used to implement the backtracking algorithm?,Queue,Stack,Array,Linked List,Stack,2,Medium,DSA,Algorithm
+154,What is the primary disadvantage of a binary search tree that is not balanced?,Speed,Memory usage,Dynamic size,Poor worst-case performance,Poor worst-case performance,4,Medium,DSA,Tree
+155,Which of the following data structures is best suited for implementing a circular buffer?,Array,Stack,Queue,Linked List,Array,1,Medium,DSA,Queue
+156,What is the worst-case time complexity of the heapsort algorithm?,O(1),O(log n),O(n log n),O(n^2),O(n log n),3,Medium,DSA,Sorting
+157,Which of the following algorithms is used to find the minimum spanning tree of a graph?,Dijkstra's Algorithm,Bellman-Ford Algorithm,Kruskal's Algorithm,Floyd-Warshall Algorithm,Kruskal's Algorithm,3,Hard,DSA,Graph
+158,What is the primary advantage of a B-tree over a binary search tree?,Speed,Memory usage,Height balance,Space utilization,Space utilization,4,Medium,DSA,Tree
+159,Which of the following data structures supports both LIFO and FIFO operations?,Stack,Queue,Deque,Linked List,Deque,3,Medium,DSA,Queue
+160,What is the time complexity of accessing an element in a hash table with a good hash function?,O(1),O(log n),O(n),O(n log n),O(1),1,Easy,DSA,Hashing
+161,Which of the following algorithms is used to solve the single-source shortest path problem?,Prim's Algorithm,Dijkstra's Algorithm,Kruskal's Algorithm,Floyd-Warshall Algorithm,Dijkstra's Algorithm,2,Medium,DSA,Graph
+162,What is the primary advantage of a circular linked list over a singly linked list?,Speed,Memory usage,Dynamic size,Traversal from any node,Traversal from any node,4,Medium,DSA,Linked List
+163,Which data structure is best suited for storing hierarchical data?,Array,Stack,Queue,Tree,Tree,4,Easy,DSA,Tree
+164,What is the average-case time complexity of the bubble sort algorithm?,O(1),O(log n),O(n),O(n^2),O(n^2),4,Medium,DSA,Sorting
+165,Which of the following is not an application of a queue?,CPU scheduling,Disk scheduling,Function call management,Task scheduling,Function call management,3,Medium,DSA,Queue
+166,"Which data structure is used to implement a LIFO (Last In, First Out) order?",Queue,Stack,Array,Linked List,Stack,2,Easy,DSA,Stack
+167,Which SQL statement is used to remove a table from a database?,DELETE TABLE,ERASE TABLE,DROP TABLE,REMOVE TABLE,DROP TABLE,3,Easy,DBMS,SQL Basics
+168,Which SQL keyword is used to sort the result-set?,ORDER,SORT,ORDER BY,SORT BY,ORDER BY,3,Easy,DBMS,SQL Basics
+169,In which normal form is a table if it is free from transitive dependency?,First Normal Form (1NF),Second Normal Form (2NF),Third Normal Form (3NF),Boyce-Codd Normal Form (BCNF),Third Normal Form (3NF),3,Medium,DBMS,Normalization
+170,Which of the following is a valid SQL constraint?,NOT NULL,AUTO_INCREMENT,ORDER BY,PRIMARY,PRIMARY,4,Easy,DBMS,SQL Constraints
+171,What is a primary key?,A unique identifier for a table,A key that can be NULL,A key used for ordering,A key that cannot be unique,A unique identifier for a table,1,Easy,DBMS,Keys
+172,Which SQL function is used to find the number of distinct values in a column?,COUNT(),DISTINCT(),SUM(),AVG(),COUNT(),1,Medium,DBMS,SQL Functions
+173,Which of the following is a DDL command?,SELECT,INSERT,UPDATE,CREATE,CREATE,4,Easy,DBMS,SQL Basics
+174,Which clause is used to filter records in SQL?,ORDER BY,WHERE,HAVING,JOIN,WHERE,2,Easy,DBMS,SQL Basics
+175,What is a foreign key?,A key that is foreign to the table,Primary key in another table,Secondary key in the same table,A key that allows foreign data,Primary key in another table,2,Medium,DBMS,Keys
+176,Which type of join returns all rows when there is a match in either table?,INNER JOIN,LEFT JOIN,RIGHT JOIN,FULL JOIN,FULL JOIN,4,Medium,DBMS,Joins
+177,Which function is used to count the number of rows in a SQL query?,SUM(),COUNT(),TOTAL(),NUMBER(),COUNT(),2,Easy,DBMS,SQL Functions
+178,What is the purpose of normalization?,To reduce data redundancy,To speed up queries,To secure the database,To increase storage,To reduce data redundancy,1,Medium,DBMS,Normalization
+179,What is a trigger in a database?,A special type of stored procedure,A method to retrieve data,An indexing technique,A type of join,A special type of stored procedure,1,Hard,DBMS,Stored Procedures
+180,Which isolation level provides the strictest level of isolation?,READ UNCOMMITTED,READ COMMITTED,REPEATABLE READ,SERIALIZABLE,SERIALIZABLE,4,Hard,DBMS,Transactions
+181,What is the result of the following query: SELECT 2 + 2?,4,2,22,Error,4,1,Easy,DBMS,SQL Functions
+182,Which of the following is not a NoSQL database?,MongoDB,Cassandra,MySQL,Redis,MySQL,3,Medium,DBMS,Database Models
+183,What is the command to remove all records from a table in SQL?,DELETE TABLE,DROP ALL,TRUNCATE TABLE,CLEAR TABLE,TRUNCATE TABLE,3,Medium,DBMS,SQL Basics
+184,What is an index in a database?,A way to increase storage,A pointer to data,An ordering mechanism,A backup tool,A pointer to data,2,Medium,DBMS,Indexing
+185,Which SQL clause is used to group rows with the same values?,GROUP BY,ORDER BY,HAVING,WHERE,GROUP BY,1,Easy,DBMS,SQL Basics
+186,What is denormalization?,Increasing redundancy for performance,Reducing redundancy for storage,Creating foreign keys,Merging databases,Increasing redundancy for performance,1,Medium,DBMS,Normalization
+187,What SQL keyword is used to add a new column to an existing table?,ALTER,ADD,UPDATE,INSERT,ALTER,1,Easy,DBMS,SQL Basics
+188,Which SQL function is used to find the average value of a column?,AVG(),SUM(),COUNT(),MEDIAN(),AVG(),1,Easy,DBMS,SQL Functions
+189,What is a view in a database?,A saved query,A table copy,A backup,A transaction log,A saved query,1,Medium,DBMS,Views
+190,Which command is used to create a new table?,ADD TABLE,INSERT TABLE,NEW TABLE,CREATE TABLE,CREATE TABLE,4,Easy,DBMS,SQL Basics
+191,What does the SQL keyword DISTINCT do?,Removes duplicate records,Filters records,Sorts records,Joins tables,Removes duplicate records,1,Medium,DBMS,SQL Basics
+192,What is a subquery?,A query within another query,A type of join,An aggregate function,An indexing technique,A query within another query,1,Medium,DBMS,SQL Basics
+193,Which of the following SQL statements will not update a record?,UPDATE table_name SET column_name = value WHERE condition,INSERT INTO table_name (column_name) VALUES (value),UPDATE table_name SET column_name = value,ALTER table_name SET column_name = value,INSERT INTO table_name (column_name) VALUES (value),2,Medium,DBMS,SQL Basics
+194,Which SQL clause is used to sort the result set?,ORDER BY,GROUP BY,WHERE,HAVING,ORDER BY,1,Easy,DBMS,SQL Basics
+195,What does the SQL command COMMIT do?,Saves all changes made during the current transaction,Undoes all changes made during the current transaction,Executes a stored procedure,Changes the database schema,Saves all changes made during the current transaction,1,Medium,DBMS,Transactions
+196,Which SQL statement is used to delete a table?,DELETE TABLE,DROP TABLE,REMOVE TABLE,ERASE TABLE,DROP TABLE,2,Easy,DBMS,SQL Basics
+197,What is a composite key?,A key that consists of multiple columns,A single-column key,A key that is not unique,A key with a default value,A key that consists of multiple columns,1,Medium,DBMS,Keys
+198,Which function in SQL can be used to find the highest value in a column?,MIN(),MAX(),AVG(),COUNT(),MAX(),2,Easy,DBMS,SQL Functions
+199,What is a database schema?,The structure of a database,The data in a database,The SQL commands used to create a database,A type of database,The structure of a database,1,Medium,DBMS,Database Design
+200,Which SQL keyword is used to remove duplicates from a result set?,REMOVE,UNIQUE,DISTINCT,EXCLUDE,DISTINCT,3,Easy,DBMS,SQL Basics
+201,What is a database transaction?,A set of SQL operations executed as a single unit,An operation that retrieves data from a database,An operation that updates a single record,An operation that deletes data,A set of SQL operations executed as a single unit,1,Medium,DBMS,Transactions
+202,Which type of SQL JOIN returns all records from both tables?,LEFT JOIN,RIGHT JOIN,INNER JOIN,FULL JOIN,FULL JOIN,4,Medium,DBMS,Joins
+203,What is the purpose of the SQL GRANT command?,To provide user permissions,To remove user permissions,To create a new user,To modify existing records,To provide user permissions,1,Medium,DBMS,Security
+204,Which command is used to modify an existing table structure?,UPDATE,ALTER,MODIFY,CHANGE,ALTER,2,Medium,DBMS,SQL Basics
+205,What is the purpose of an entity-relationship diagram (ERD)?,To model database structure,To query a database,To execute a stored procedure,To back up data,To model database structure,1,Medium,DBMS,Database Design
+206,What SQL keyword is used to specify the condition for a record to be updated?,SET,WHERE,UPDATE,ALTER,WHERE,2,Easy,DBMS,SQL Basics
+207,What does SQL stand for?,Structured Query Language,Sequential Query Language,Simple Query Language,Standard Query Language,Structured Query Language,1,Easy,DBMS,SQL Basics
+208,What is the main purpose of a database index?,To speed up queries,To create backups,To store large amounts of data,To modify records,To speed up queries,1,Medium,DBMS,Indexing
+209,Which SQL command is used to remove a database?,DROP DATABASE,DELETE DATABASE,REMOVE DATABASE,CLEAR DATABASE,DROP DATABASE,1,Medium,DBMS,SQL Basics
+210,What is a stored procedure?,A precompiled SQL statement,A runtime SQL statement,A temporary SQL statement,A new SQL query,A precompiled SQL statement,1,Medium,DBMS,Stored Procedures
+211,Which SQL clause is used to filter records after grouping?,HAVING,WHERE,GROUP BY,ORDER BY,HAVING,1,Medium,DBMS,SQL Basics
+212,What is the function of the SQL GROUP BY clause?,To group rows that have the same values in specified columns,To sort the result set,To filter records based on a condition,To perform a join operation,To group rows that have the same values in specified columns,1,Medium,DBMS,SQL Basics
+213,Which of the following is not a type of database relationship?,One-to-One,One-to-Many,Many-to-Many,Many-to-Few,Many-to-Few,4,Medium,DBMS,Database Design
+214,What does the SQL UPDATE statement do?,Modifies existing records,Deletes records,Inserts new records,Selects records,Modifies existing records,1,Easy,DBMS,SQL Basics
+215,Which SQL function is used to find the total sum of a numeric column?,SUM(),TOTAL(),COUNT(),MAX(),SUM(),1,Easy,DBMS,SQL Functions
+216,What is a normalization form?,A stage in database design,A query optimization technique,A type of database,An indexing method,A stage in database design,1,Medium,DBMS,Normalization
+217,What does the SQL keyword INNER JOIN do?,Returns records with matching values in both tables,Returns all records from the left table,Returns all records from the right table,Returns all records,Returns records with matching values in both tables,1,Medium,DBMS,Joins
+218,Which of the following is not a type of SQL constraint?,UNIQUE,PRIMARY,FOREIGN,DEFAULT,DEFAULT,4,Easy,DBMS,SQL Constraints
+219,What is a database view?,A virtual table based on the result of a query,A physical table,A backup,An index,A virtual table based on the result of a query,1,Medium,DBMS,Views
+220,Which SQL function returns the number of non-null values in a column?,COUNT(),SUM(),AVG(),MIN(),COUNT(),1,Easy,DBMS,SQL Functions
+221,What is the purpose of the SQL ALTER command?,To remove a table,To create a new table,To modify the structure of a table,To query data,To modify the structure of a table,3,Medium,DBMS,SQL Basics
+222,Which command is used to add a new row in a table?,INSERT INTO,UPDATE,ADD,CREATE,INSERT INTO,1,Easy,DBMS,SQL Basics
+223,What is an example of a relational database?,MongoDB,MySQL,Redis,Neo4j,MySQL,2,Easy,DBMS,Database Models
+224,What does the SQL keyword UNION do?,Combines the result sets of two or more queries,Filters records,Sorts results,Joins tables,Combines the result sets of two or more queries,1,Medium,DBMS,SQL Basics
+225,Which type of SQL JOIN returns only unmatched records from the right table?,LEFT JOIN,RIGHT JOIN,INNER JOIN,FULL JOIN,RIGHT JOIN,2,Medium,DBMS,Joins
+226,What is a database schema?,The design of a database,The data stored in a database,A query language,An indexing method,The design of a database,1,Medium,DBMS,Database Design
+227,What SQL function is used to find the smallest value in a column?,MIN(),MAX(),SUM(),AVG(),MIN(),1,Easy,DBMS,SQL Functions
+228,Which of the following is a NoSQL database?,Oracle,PostgreSQL,MongoDB,SQL Server,MongoDB,3,Easy,DBMS,Database Models
+229,What is the purpose of a primary key in a table?,To uniquely identify each record,To define relationships between tables,To enforce data types,To index columns,To uniquely identify each record,1,Easy,DBMS,Keys
+230,What does the SQL keyword WHERE do?,Joins tables,Sorts results,Groups records,Filters records based on a condition,Filters records based on a condition,4,Easy,DBMS,SQL Basics
+231,What is a schema in a database?,The structure of the database tables,The data in a table,The SQL queries,The backup process,The structure of the database tables,1,Medium,DBMS,Database Design
+232,What does the SQL command DROP TABLE do?,Deletes a table and its data,Removes all records from a table,Modifies a table structure,Creates a new table,Deletes a table and its data,1,Medium,DBMS,SQL Basics
+233,Which of the following is used to limit the number of rows returned by a query?,TOP,MAX,LIMIT,ROWNUM,LIMIT,3,Medium,DBMS,SQL Basics
+234,What is the purpose of the SQL DELETE command?,To remove a table,To remove records from a table,To modify records,To create a new record,To remove records from a table,2,Easy,DBMS,SQL Basics
+235,What does the SQL keyword SELECT do?,Retrieves data from a database,Updates data,Deletes data,Creates tables,Retrieves data from a database,1,Easy,DBMS,SQL Basics
+236,What is a data dictionary?,A database that stores metadata,A database that stores user data,A query language,A backup tool,A database that stores metadata,1,Medium,DBMS,Database Design
+237,Which SQL function is used to get the current date?,GETDATE(),CURRENT_DATE(),NOW(),TODAY(),CURRENT_DATE(),2,Easy,DBMS,SQL Functions
+238,What is the purpose of normalization?,To reduce data redundancy and improve data integrity,To speed up queries,To store large amounts of data,To increase security,To reduce data redundancy and improve data integrity,1,Medium,DBMS,Normalization
+239,What is the purpose of the SQL SELECT statement?,To insert data into a database,To query data from a database,To update existing data,To delete data,To query data from a database,2,Easy,DBMS,SQL Basics
+240,What is a transaction log?,An index of database tables,A backup of the database,The structure of database tables,A record of all transactions made by the database,A record of all transactions made by the database,4,Medium,DBMS,Transactions
+241,Which SQL command is used to create an index?,CREATE INDEX,ADD INDEX,INSERT INDEX,MODIFY INDEX,CREATE INDEX,1,Medium,DBMS,Indexing
+242,What does the SQL keyword LEFT JOIN do?,Returns all records from the right table and matched records from the left table,Returns records with matching values in both tables,Returns all records from the left table and matched records from the right table,Returns unmatched records from both tables,Returns all records from the left table and matched records from the right table,3,Medium,DBMS,Joins
+243,What is a data warehouse?,A system used for reporting and data analysis,The main database of an application,The system for managing transactions,The database used for real-time processing,A system used for reporting and data analysis,1,Hard,DBMS,Database Models
+244,What is a one-to-many relationship in a database?,Where multiple records in one table are related to one record in another table,A relationship where one record in one table is related to multiple records in another table,Where multiple records in both tables are related to each other,Where one record in a table is related to one record in another table,A relationship where one record in one table is related to multiple records in another table,2,Medium,DBMS,Database Design
+245,Which SQL keyword is used to modify existing data in a table?,UPDATE,INSERT,ALTER,DELETE,UPDATE,1,Easy,DBMS,SQL Basics
+246,What is the purpose of the SQL ALTER TABLE command?,To change the structure of an existing table,To insert new records,To delete a table,To create a new table,To change the structure of an existing table,1,Medium,DBMS,SQL Basics
+247,Which of the following SQL functions is used to concatenate strings?,CONCAT(),JOIN(),MERGE(),COMBINE(),CONCAT(),1,Easy,DBMS,SQL Functions
+248,What does the SQL keyword HAVING do?,Filters records before aggregation,Groups records,Filters records after aggregation,Joins tables,Filters records after aggregation,3,Medium,DBMS,SQL Basics
+249,Which SQL command is used to create a new user?,ADD USER,INSERT USER,NEW USER,CREATE USER,CREATE USER,4,Medium,DBMS,Security
+250,What is a data model?,A conceptual framework for organizing data,An actual database structure,A query optimization technique,An indexing method,A conceptual framework for organizing data,1,Medium,DBMS,Database Design
+251,Which SQL function returns the current system date and time?,CURRENT_TIMESTAMP(),GETDATE(),NOW(),DATE(),CURRENT_TIMESTAMP(),1,Medium,DBMS,SQL Functions
+252,What is a non-relational database?,An SQL database,A database that does not use SQL,A database with relations between tables,A backup database,A database that does not use SQL,2,Medium,DBMS,Database Models
+253,What does the SQL keyword RIGHT JOIN do?,Returns all records from the left table and matched records from the right table,Returns all records from the right table and matched records from the left table,Returns records with matching values in both tables,Returns unmatched records from both tables,Returns all records from the right table and matched records from the left table,2,Medium,DBMS,Joins
+254,What is an example of an aggregate function?,COUNT(),CONCAT(),JOIN(),INSERT(),COUNT(),1,Easy,DBMS,SQL Functions
+255,Which SQL command is used to grant privileges to a user?,GRANT,ALLOW,PERMIT,ACCESS,GRANT,1,Medium,DBMS,Security
+256,What does the SQL keyword ORDER BY do?,Groups records based on a condition,Filters records based on a condition,Joins tables,Sorts the result set based on one or more columns,Sorts the result set based on one or more columns,4,Easy,DBMS,SQL Basics
+257,What is the function of the SQL LIMIT clause?,Specifies a column to be indexed,Filters records based on a condition,Limits the number of rows returned by a query,Sorts results,Limits the number of rows returned by a query,3,Medium,DBMS,SQL Basics
+258,What does the SQL keyword SELECT DISTINCT do?,Returns all records,Returns unique records only,Sorts the results,Groups records,Returns unique records only,2,Medium,DBMS,SQL Basics
+259,What is the purpose of a backup in a database?,To ensure data can be restored in case of loss,To speed up queries,To modify records,To index tables,To ensure data can be restored in case of loss,1,Medium,DBMS,Backup & Recovery
+260,Which of the following is not a type of database normalization?,1NF,2NF,5NF,4NF,5NF,3,Medium,DBMS,Normalization
+261,What is the purpose of the SQL INSERT INTO command?,To add new records to a table,To update existing records,To delete records,To create a new table,To add new records to a table,1,Easy,DBMS,SQL Basics
+262,What is the purpose of a database relationship?,To define how tables are related,To store data in a table,To execute queries,To index columns,To define how tables are related,1,Medium,DBMS,Database Design
+263,Which SQL keyword is used to specify the database to use?,USE,SELECT,FROM,WHERE,USE,1,Easy,DBMS,SQL Basics
+264,What is a relational database?,A database that uses tables to store data,An unstructured database,An index-based database,A database with no relationships,A database that uses tables to store data,1,Easy,DBMS,Database Models
+265,Which SQL function is used to get the total number of rows in a table?,COUNT(),SUM(),TOTAL(),MAX(),COUNT(),1,Easy,DBMS,SQL Functions
+266,What is the purpose of SQL JOIN?,To combine rows from two or more tables based on a related column,To filter records,To sort records,To group rows,To combine rows from two or more tables based on a related column,1,Medium,DBMS,Joins
+267,What does the SQL keyword CROSS JOIN do?,Returns the Cartesian product of two tables,Joins tables based on a related column,Filters records,Returns records with matching values in both tables,Returns the Cartesian product of two tables,1,Medium,DBMS,Joins
+268,What is the function of a database trigger?,To automatically execute a predefined action when a specified event occurs,To manually update records,To create a new table,To perform a query,To automatically execute a predefined action when a specified event occurs,1,Hard,DBMS,Stored Procedures
+269,Which SQL command is used to create a new table?,CREATE TABLE,NEW TABLE,ADD TABLE,INSERT TABLE,CREATE TABLE,1,Easy,DBMS,SQL Basics
+270,What is the function of the SQL DELETE command?,To remove records from a table,To remove a table from the database,To update records,To create a new table,To remove records from a table,1,Easy,DBMS,SQL Basics
+271,What does the SQL function REPLACE do?,Replaces occurrences of a specified substring with another substring,Concatenates strings,Finds the length of a string,Counts occurrences of a substring,Replaces occurrences of a specified substring with another substring,1,Medium,DBMS,SQL Functions
+272,Which of the following is not a type of SQL JOIN?,FULL JOIN,LEFT JOIN,RIGHT JOIN,PARTIAL JOIN,PARTIAL JOIN,4,Medium,DBMS,Joins
+273,What is the purpose of an SQL view?,To present data in a virtual table based on a query,To store data permanently,To create backups,To modify table structure,To present data in a virtual table based on a query,1,Medium,DBMS,Views
+274,Which SQL function is used to round a numeric value to the nearest integer?,ROUND(),FLOOR(),CEILING(),TRUNCATE(),ROUND(),1,Easy,DBMS,SQL Functions
+275,What does the SQL function SUBSTRING do?,Counts the number of characters in a string,Replaces part of a string,Extracts a part of a string,Concatenates two strings,Extracts a part of a string,3,Medium,DBMS,SQL Functions
+276,Which SQL keyword is used to provide access permissions to users?,GRANT,ALLOW,PERMIT,ACCESS,GRANT,1,Medium,DBMS,Security
+277,What is an SQL schema?,The data contained in a table,"A collection of database objects including tables, views, and indexes",An SQL query,An index structure,"A collection of database objects including tables, views, and indexes",2,Medium,DBMS,Database Design
+278,What does the SQL command TRUNCATE TABLE do?,Removes all rows from a table without logging individual row deletions,Removes a table from the database,Updates all rows in a table,Creates a new table,Removes all rows from a table without logging individual row deletions,1,Medium,DBMS,SQL Basics
+279,Which SQL function returns the length of a string?,SIZE(),COUNT(),CHAR_LENGTH(),LENGTH(),LENGTH(),4,Easy,DBMS,SQL Functions
+280,What is the purpose of the SQL UPDATE command?,To remove records from a table,To create new records,To modify existing records in a table,To delete a table,To modify existing records in a table,3,Easy,DBMS,SQL Basics
+281,What is a foreign key constraint?,A rule to enforce a link between records in different tables,An indexing method,An SQL command to delete records,An SQL function to count rows,A rule to enforce a link between records in different tables,1,Medium,DBMS,Keys
+282,Which SQL command is used to remove all records from a table?,TRUNCATE TABLE,DELETE TABLE,DROP TABLE,CLEAR TABLE,TRUNCATE TABLE,1,Medium,DBMS,SQL Basics
+283,What does the SQL keyword DISTINCT do?,Filters records based on a condition,Removes duplicate records from the result set,Joins tables,Groups records,Removes duplicate records from the result set,2,Medium,DBMS,SQL Basics
+284,What is a database index?,A structure that improves the speed of data retrieval,An SQL query,The physical storage of data,The process of removing data,A structure that improves the speed of data retrieval,1,Medium,DBMS,Indexing
+285,What is the purpose of the SQL ORDER BY clause?,To filter records,To group records,To sort the result set based on one or more columns,To join tables,To sort the result set based on one or more columns,3,Easy,DBMS,SQL Basics
+286,Which of the following SQL commands is used to delete a database?,DELETE DATABASE,DROP DATABASE,REMOVE DATABASE,CLEAR DATABASE,DROP DATABASE,2,Medium,DBMS,SQL Basics
+287,What is the purpose of an SQL aggregate function?,To perform a calculation on a set of values and return a single value,To filter records,To join tables,To update records,To perform a calculation on a set of values and return a single value,1,Medium,DBMS,SQL Functions
+288,Which SQL keyword is used to create a new index on a table?,CREATE INDEX,ADD INDEX,INSERT INDEX,NEW INDEX,CREATE INDEX,1,Medium,DBMS,Indexing
+289,What is an example of a non-relational database?,MySQL,PostgreSQL,MongoDB,Oracle,MongoDB,3,Medium,DBMS,Database Models
+290,Which SQL function calculates the average value of a numeric column?,AVG(),SUM(),COUNT(),MEDIAN(),AVG(),1,Easy,DBMS,SQL Functions
+291,What does the SQL function UPPER do?,Converts all characters in a string to uppercase,Converts all characters to lowercase,Replaces characters in a string,Counts the number of characters in a string,Converts all characters in a string to uppercase,1,Medium,DBMS,SQL Functions
+292,Which SQL keyword is used to specify the column(s) to be retrieved in a query?,FROM,SELECT,WHERE,ORDER,SELECT,2,Easy,DBMS,SQL Basics
+293,What is a one-to-many relationship in a database?,A relationship where one record in one table is related to multiple records in another table,Where multiple records in one table are related to one record in another table,Where multiple records in both tables are related to each other,Where one record in a table is related to one record in another table,A relationship where one record in one table is related to multiple records in another table,1,Medium,DBMS,Database Design
+294,What is the function of the SQL GROUP BY clause?,To group rows that have the same values in specified columns,To sort records,To filter records,To join tables,To group rows that have the same values in specified columns,1,Medium,DBMS,SQL Basics
+295,Which SQL command is used to modify an existing column in a table?,ALTER TABLE,MODIFY TABLE,UPDATE TABLE,CHANGE TABLE,ALTER TABLE,1,Medium,DBMS,SQL Basics
+296,What is a database transaction?,An operation that retrieves data from the database,An operation that updates a single record,An operation that deletes records,A sequence of operations performed as a single unit,A sequence of operations performed as a single unit,4,Medium,DBMS,Transactions
+297,What does the SQL keyword RIGHT JOIN do?,Returns all records from the right table and matched records from the left table,Returns all records from the left table and matched records from the right table,Returns records with matching values in both tables,Returns unmatched records from both tables,Returns all records from the right table and matched records from the left table,1,Medium,DBMS,Joins
+298,Which of the following SQL statements will not modify data?,DELETE FROM table_name,INSERT INTO table_name (column_name) VALUES (value),UPDATE table_name SET column_name = value,SELECT * FROM table_name,SELECT * FROM table_name,4,Medium,DBMS,SQL Basics
+299,What is a composite key?,An index key,An automatically generated key,An external key,A key that consists of two or more columns,A key that consists of two or more columns,4,Medium,DBMS,Keys
+300,Which SQL function returns the maximum value from a set of values?,MIN(),MAX(),SUM(),AVG(),MAX(),2,Easy,DBMS,SQL Functions
+301,What is the purpose of the SQL TRUNCATE TABLE command?,To delete the table structure,To create a new table,To remove all rows from a table quickly,To add new rows,To remove all rows from a table quickly,3,Medium,DBMS,SQL Basics
+302,What does the SQL keyword LEFT JOIN do?,Returns all records from the right table and matched records from the left table,Returns all records from the left table and matched records from the right table,Returns records with matching values in both tables,Returns unmatched records from both tables,Returns all records from the left table and matched records from the right table,2,Medium,DBMS,Joins
+303,What is the purpose of an SQL view?,To store data permanently,To present data in a virtual table based on a query,To back up data,To modify table structure,To present data in a virtual table based on a query,2,Medium,DBMS,Views
+304,What is the function of the SQL ROUND() function?,To find the smallest value in a set,To concatenate strings,To round a numeric value to the nearest whole number,To count the number of records,To round a numeric value to the nearest whole number,3,Medium,DBMS,SQL Functions
+305,Which SQL keyword is used to ensure that a column cannot have NULL values?,NOT NULL,UNIQUE,PRIMARY KEY,DEFAULT,NOT NULL,1,Easy,DBMS,SQL Constraints
+306,What is the purpose of the SQL UPDATE command?,To modify existing data in a table,To insert new data into a table,To delete data from a table,To create a new table,To modify existing data in a table,1,Easy,DBMS,SQL Basics
+307,Which SQL function returns the total number of rows in a table?,COUNT(),SUM(),AVG(),TOTAL(),COUNT(),1,Easy,DBMS,SQL Functions
+308,What is a foreign key?,An index on a table,The primary key of a table,An SQL function,A column or set of columns used to establish a link between records in different tables,A column or set of columns used to establish a link between records in different tables,4,Medium,DBMS,Keys
+309,What does the SQL function CONCAT() do?,Concatenates two or more strings into one,Calculates the sum of a numeric column,Finds the average value of a column,Counts the number of rows in a table,Concatenates two or more strings into one,1,Easy,DBMS,SQL Functions
+310,Which of the following is a type of SQL constraint?,PRIMARY KEY,UNIQUE,FOREIGN KEY,All of the above,All of the above,4,Easy,DBMS,SQL Constraints
+311,What is the purpose of an SQL trigger?,To automatically perform a specific action in response to an event,To manually update data,To create a backup of the database,To join tables,To automatically perform a specific action in response to an event,1,Hard,DBMS,Stored Procedures
+312,Which SQL function is used to get the current time?,CURRENT_TIME(),NOW(),CURRENT_DATE(),GET_TIME(),NOW(),2,Medium,DBMS,SQL Functions
+313,What is the purpose of the SQL LIMIT clause?,To limit the number of rows returned by a query,To filter records based on a condition,To sort the results,To group records,To limit the number of rows returned by a query,1,Medium,DBMS,SQL Basics
+314,What does the SQL function SUBSTRING() do?,Extracts a portion of a string based on specified start and length,Counts the number of characters in a string,Replaces a part of a string,Concatenates two strings,Extracts a portion of a string based on specified start and length,1,Medium,DBMS,SQL Functions
+315,Which SQL command is used to change a table's column data type?,ALTER TABLE,MODIFY TABLE,CHANGE COLUMN,UPDATE TABLE,ALTER TABLE,1,Medium,DBMS,SQL Basics
+316,What is a stored procedure in SQL?,A data retrieval method,A type of index for optimizing queries,A backup mechanism for the database,A set of SQL statements that can be executed as a unit,A set of SQL statements that can be executed as a unit,4,Hard,DBMS,Stored Procedures

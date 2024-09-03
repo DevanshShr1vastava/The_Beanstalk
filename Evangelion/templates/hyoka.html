@@ -79,7 +79,7 @@
     return val > 9 ? val : "0" + val;
     }
 
-    var sec = -1;
+    var sec = 1;
     function pad(val) { return val > 9 ? val : "0" + val; }
     setInterval(function () {
         $("#seconds").html(pad(++sec % 60));

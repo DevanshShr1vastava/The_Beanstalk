@@ -10,4 +10,17 @@
 
     <h2><a href="{{url 'arena'}}">Start Test</a></h2>
 </body>
+    <h2><a href="http://127.0.0.1:8000/arena">Start Test</a></h2>
+    <table>
+        {% for d in usratmpts %}
+        <tr>
+        <td>{{ d.qpID_id }}</td>
+        <td>{{ d.attempts }}</td>
+        <td>{{ d.time_taken }}</td>
+        <td>{{ d.answer }}</td>
+        <td>{{ d.marked_for_review }}</td>
+    </tr>
+        {% endfor %}
+    </table>
+    </body>
 </html>
