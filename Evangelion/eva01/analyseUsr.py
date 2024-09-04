@@ -39,7 +39,7 @@ def determine_label(row):
 #GENERATING A SAMPLE DATASET TO TRAIN THE MODEL AND TEST THE MODEL
 ################################################
 np.random.seed(42)
-QuestionBank = pd.read_csv('D:\Code\College Stuff\BeanstalkYetAgain\Evangelion\eva01\questionBank.csv')
+QuestionBank = pd.read_csv("eva01\QBcopy.csv")
 
 qb_dbms_df = QuestionBank[QuestionBank['domain']=='DBMS']
 qb_dsa_df = QuestionBank[QuestionBank['domain']=='DSA']

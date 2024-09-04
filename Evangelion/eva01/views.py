@@ -6,8 +6,14 @@ import numpy as np
 from django.utils import timezone
 from datetime import timedelta
 from eva01.generateQP import generateQIDS,analyse_usr
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from .forms import SignUpForm
+
 # Create your views here.
 time_global = 30*60
+@login_required
 def hyoka(request, qpID, qID):
     
     if request.session.get('test_state') != 'in_progress':
@@ -138,3 +144,32 @@ def home(request):
 def test_complete_page(request):
     
     return render(request,"test_complete_page.html")
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request,user)
+            return render('home')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
+        
+def login(request):
+    if request.method =='POST':
+        form = AuthenticationForm(request, data = request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+    else:
+        form = AuthenticationForm()
+    return render(request,'login.html',{'form':form})
+
+def user_logout(request):
+    logout(request)
+    return render('home')
