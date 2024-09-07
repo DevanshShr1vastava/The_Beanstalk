@@ -8,9 +8,12 @@
     <div class="container mt-5">
         <h1>Sign Up</h1>
         <form method="POST">
-            {% csrf_token %}
+            {%csrf_token%}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Sign Up</button>
+            <button type="submit" class="btn btn-primary">Sign Up</button><br><br>
+            <p>If you already have an account: </p>
+            <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+    
         </form>
     </div>
 </body>
