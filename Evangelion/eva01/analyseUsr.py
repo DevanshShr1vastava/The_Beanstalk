@@ -197,7 +197,7 @@ classified_data = subdomain_stats[['subdomain', 'category']]
 # Encoding the categories
 label_encoder = LabelEncoder()
 classified_data.loc[:,'category_encoded'] = label_encoder.fit_transform(classified_data['category'])
-print (classified_data)
+# print (classified_data)
 # Features and labels
 X = subdomain_stats[['percent_repeat']]
 y = classified_data['category_encoded']

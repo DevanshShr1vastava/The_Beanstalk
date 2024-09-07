@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class questionBank(models.Model):
@@ -16,10 +16,12 @@ class questionBank(models.Model):
     subdomain = models.CharField(max_length=255)
 
 class QuestionPapers(models.Model):
+    userID = models.ForeignKey(User, on_delete=models.CASCADE, related_name="UID")
     qpID = models.IntegerField()
     qID = models.ForeignKey(questionBank,on_delete=models.CASCADE,related_name='queID')
 
 class userAttempts(models.Model):
+    userID = models.ForeignKey(User, on_delete=models.CASCADE, related_name="UserID")
     qpID = models.ForeignKey(QuestionPapers, on_delete = models.CASCADE, related_name='questionPaperID')
     qID = models.ForeignKey(questionBank, on_delete=models.CASCADE, related_name='questionID')
     answer = models.IntegerField()

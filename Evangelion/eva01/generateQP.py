@@ -188,7 +188,7 @@ def analyse_usr(data):
     tolabelTopic_stats = toLabelTopicDataFrame.groupby('subdomain')['label'].agg(['mean','count']).reset_index()
 
     tolabelTopic_stats['percent_repeat'] = tolabelTopic_stats['mean'] * 100
-    print(tolabelTopic_stats)
+    # print(tolabelTopic_stats)
     secondth = knn_model.predict(tolabelTopic_stats.drop(columns=['subdomain','mean','count']))
 
     topic_classification = []
