@@ -6,6 +6,10 @@
     <title>Document</title>
 </head>
 <body>
+    {% load static %}
+    <div class = ""></div>
+        <a href="{% url 'home' %}" class="btn btn-info p- rounded-circle" style="width:50px;height:50px"><img src="{{ MEDIA_URL }}placeholder.png" alt="" style="width:100%; height:100%;"></a>
+    </div>
     <h1>This is the arena</h1>
     <h2>A question paper has been generated</h2>
     <h2>Insert instructions list here</h2>

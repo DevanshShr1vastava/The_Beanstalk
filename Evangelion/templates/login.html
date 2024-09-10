@@ -4,9 +4,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class = "">
-        <a href="{% url 'home' %}" class="btn btn-info p- rounded-circle" style="width:50px;height:50px"><img src='https://www.shutterstock.com/image-vector/beanstalk-vector-icon-1250954776'></a>
-
+    {% load static %}
+    <div class = ""></div>
+        <a href="{% url 'home' %}" class="btn btn-info p- rounded-circle" style="width:50px;height:50px"><img src="{{ MEDIA_URL }}placeholder.png" alt="" style="width:100%; height:100%;"></a>
     </div>
     <div class="container mt-5">
         <h1>Login</h1>
