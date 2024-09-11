@@ -2,7 +2,10 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.ensemble import VotingClassifier
+from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_score
 from sklearn.preprocessing import LabelEncoder
 
 def calculate_correctness_rate(user_attempts):
@@ -38,8 +41,8 @@ def determine_label(row):
 ################################################
 #GENERATING A SAMPLE DATASET TO TRAIN THE MODEL AND TEST THE MODEL
 ################################################
-np.random.seed(42)
-QuestionBank = pd.read_csv("eva01\QBcopy.csv")
+np.random.seed(41)
+QuestionBank = pd.read_csv("questionBank.csv")
 
 qb_dbms_df = QuestionBank[QuestionBank['domain']=='DBMS']
 qb_dsa_df = QuestionBank[QuestionBank['domain']=='DSA']
@@ -124,18 +127,39 @@ df = pd.read_csv('dummyData.csv')
 X = df.drop(columns=['label', 'user_id', 'question_id', 'domain', 'subdomain'])
 y = df['label']
 
-# Split the data into training and test sets
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=34)
-
 # Feature scaling
 scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
+x_scaled = scaler.fit_transform(X)
 
-# Initialize and train the weighted KNN model
+# Initialize the models
+
 knn = KNeighborsClassifier(n_neighbors=5, weights='distance')
-knn.fit(X_train_scaled, y_train)
+svm = SVC(probability = True)
+logReg = LogisticRegression()
+
+# combine models into an ensemble using soft voting
+
+ensemble_model_QC = VotingClassifier(estimators=[
+    ('knn',knn),
+    ('svm',svm),
+    ('logReg',logReg)
+], voting='soft')
+
+# K-folds cross validation
+
+kf = StratifiedKFold(n_splits = 5, shuffle=True, random_state = 32)
+
+# evaluate ensemble models with cross validation
+
+cv_scores = cross_val_score(ensemble_model_QC, x_scaled, y, cv = kf, scoring='accuracy')
+
+# Print cross-validation scores
+# print(f'Cross-validation scores: {cv_scores}')
+# print(f'Mean accuracy: {cv_scores.mean()}')
+
+# Fit ensemble model to the entire training set
+
+ensemble_model_QC.fit(x_scaled, y)
 
 ##########################################################################################################################
 # New input data
@@ -192,26 +216,43 @@ classified_data = subdomain_stats[['subdomain', 'category']]
 
 # print(classified_data)
 
-
-
 # Encoding the categories
 label_encoder = LabelEncoder()
-classified_data.loc[:,'category_encoded'] = label_encoder.fit_transform(classified_data['category'])
-# print (classified_data)
+# Properly using .loc to avoid the warning
+# Make an explicit copy to avoid the warning
+classified_data = classified_data.copy()
+
+classified_data.loc[:, 'category_encoded'] = label_encoder.fit_transform(classified_data['category'])
+
+
 # Features and labels
-X = subdomain_stats[['percent_repeat']]
-y = classified_data['category_encoded']
+X2 = subdomain_stats[['percent_repeat']]
+y2 = classified_data['category_encoded']
 
-# Split the data
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=47)
+#Feature Scaling
+scaler2= StandardScaler()
+x2_scaled = scaler2.fit_transform(X2)
 
-# Train Weighted KNN
-knn_model = KNeighborsClassifier(weights='distance')
-knn_model.fit(X_train, y_train)
-
-# Evaluate the models
-
-# knn_accuracy = knn_model.score(X_test, y_test)
+knn_model = KNeighborsClassifier(n_neighbors=5, weights='distance')
+svm_model = SVC(probability = True)
+logReg_model = LogisticRegression()
 
 
-# print(f'\nWeighted KNN Accuracy: {knn_accuracy}')
+#creating the second ensemble model which is using soft voting
+ensemble_model_TC = VotingClassifier(estimators = [
+    ('knn', knn_model),
+    ('svm', svm_model),
+    ('logreg', logReg_model)
+], voting = 'soft')
+
+
+# K-folds cross validation
+
+kf2 = StratifiedKFold(n_splits = 5, shuffle=True, random_state = 32)
+
+# Evaluate the ensemble model with cross-validation
+cv_scores_TC = cross_val_score(ensemble_model_TC, x2_scaled, y2, cv=kf2, scoring='accuracy')
+
+
+# Fit the ensemble model to the entire dataset
+ensemble_model_TC.fit(x2_scaled, y2)

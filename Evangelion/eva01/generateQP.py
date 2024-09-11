@@ -1,6 +1,6 @@
 import random
 import pandas as pd
-from eva01.analyseUsr import knn,knn_model,calculate_confidence_level,calculate_correctness_rate,scaler, selected_columns
+from eva01.analyseUsr import ensemble_model_QC,ensemble_model_TC,calculate_confidence_level,calculate_correctness_rate,scaler, selected_columns
 from .models import questionBank
 
 def adjust_weights(weights, subdomain, adjustment):
@@ -158,7 +158,7 @@ def analyse_usr(data):
 
     # print(type(inpDataScale))
 
-    predict=knn.predict(inpDataScale)
+    predict=ensemble_model_QC.predict(inpDataScale)
 
     QuestionLabelledData = []
     for index,rows in inpData.iterrows():
@@ -189,7 +189,7 @@ def analyse_usr(data):
 
     tolabelTopic_stats['percent_repeat'] = tolabelTopic_stats['mean'] * 100
     # print(tolabelTopic_stats)
-    secondth = knn_model.predict(tolabelTopic_stats.drop(columns=['subdomain','mean','count']))
+    secondth = ensemble_model_TC.predict(tolabelTopic_stats.drop(columns=['subdomain','mean','count']))
 
     topic_classification = []
 
