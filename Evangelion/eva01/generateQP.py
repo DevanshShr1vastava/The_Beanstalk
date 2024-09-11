@@ -108,7 +108,7 @@ def generateQIDS(QuestionBank,weights_updated=None):
             subdomain_questions = subdomainQB[subdomainQB['subdomain'] == subdomain]
             remaining_questions = subdomain_questions[~subdomain_questions['qID'].isin(selected_QIDS)]
             if len(remaining_questions) > 0:
-                selected_QIDS.append(remaining_questions.sample(1)['qID'].values[0])
+                selected_QIDS.append(int(remaining_questions.sample(1)['qID'].values[0]))
             if len(selected_QIDS) >= 20:
                 break
 
