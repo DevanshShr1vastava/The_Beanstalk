@@ -8,42 +8,75 @@
 </head>
 <body>
     {% load static %}
-    <div class = ""></div>
-        <a href="{% url 'home' %}" class="btn btn-info p- rounded-circle" style="width:50px;height:50px"><img src="{{ MEDIA_URL }}placeholder.png" alt="" style="width:100%; height:100%;"></a>
-    </div>
-    <div class="m-1">
+    
+    <div class="m-5"></div>
+
+    <!-- Flex container for buttons -->
+    <div class="d-flex justify-content-between align-items-center px-3">
+        <!-- Left circular home button -->
+        <a href="{% url 'home' %}" class="btn btn-info p-0 rounded-circle" style="width:50px;height:50px">
+            <img src="{{ MEDIA_URL }}placeholder.png" alt="" style="width:100%; height:100%;">
+        </a>
+
+        <!-- Right dropdown button (authenticated) -->
         {% if user.is_authenticated %}
-        <h6 style="text-align:right">Welcome {{user.username}}</h6   >
-        <p style="text-align:right"><a href ="{%url 'logout'%}" class = "btn btn-danger" style="text-align:right">logout</a></p>
-    
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary p-0 rounded-circle" style="width:50px;height:50px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <!-- Action button icon or image -->
+                <img src="{{ MEDIA_URL }}placeholder.png" alt="" style="width:100%; height:100%;">
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Profile Settings</a> <!-- Add your profile settings link -->
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+            </div>
+        </div>
         {% else %}
-        <h6 style="text-align:right"> Please Login</h6>
-        <p style="text-align:right"><a href="{% url 'login' %}" class = "btn btn-primary">login</a></p>
-        <p style="text-align:right"><a href="{% url 'signup' %}" class = "btn btn-outline-primary">signup</a></p>
-    
+        <!-- Right dropdown button (not authenticated) -->
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary p-0 rounded-circle" style="width:50px;height:50px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ MEDIA_URL }}placeholder.png" alt="" style="width:100%; height:100%;">
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+                <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+        </div>
         {% endif %}
     </div>
 
-</body>
-<div class="m-5">
+    <!-- Welcome text for authenticated user -->
     {% if user.is_authenticated %}
-        
-    {%else%}
+    <h6 class="text-end me-3">Welcome {{ user.username }}</h6>
+    {% else %}
+    <h6 class="text-end me-3">Please Login</h6>
     {% endif %}
-</div>
-        <div class="m-auto">
-            <h2 style="text-align:center"><a href="{% if user.is_authenticated %}{% url 'arena' %}{% else %} {% url 'login' %} {% endif %}" class = "btn btn-success btn-lg">Start Test</a></h2>
-        </div>
-    <table>
+
+    <!-- Start Test button -->
+    <div class="m-auto">
+        <h2 class="text-center">
+            <a href="{% if user.is_authenticated %}{% url 'arena' %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-success btn-lg">Start Test</a>
+        </h2>
+    </div>
+
+    <!-- Table of attempts -->
+    <table class="table">
         {% for d in usratmpts %}
         <tr>
-        <td>{{ d.qpID_id }}</td>
-        <td>{{ d.attempts }}</td>
-        <td>{{ d.time_taken }}</td>
-        <td>{{ d.answer }}</td>
-        <td>{{ d.marked_for_review }}</td>
-    </tr>
+            <td>{{ d.qpID_id }}</td>
+            <td>{{ d.attempts }}</td>
+            <td>{{ d.time_taken }}</td>
+            <td>{{ d.answer }}</td>
+            <td>{{ d.marked_for_review }}</td>
+        </tr>
         {% endfor %}
     </table>
-    </body>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
 </html>
