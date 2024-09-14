@@ -7,6 +7,7 @@ from .models import UserProfile
 
 
 class SignUpForm(UserCreationForm):
+    username = forms.CharField(required=True,help_text='Required. Provide a valid username.')
     email = forms.EmailField(required=True, help_text='Required. Provide a valid email address.')
 
     class Meta:

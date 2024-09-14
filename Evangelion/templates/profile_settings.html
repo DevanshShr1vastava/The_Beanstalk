@@ -28,7 +28,7 @@
                 <img src="{% static 'placeholder.png' %}" alt="" class="avatar-img">
             </a>
 
-            <h1>BEANSTALK</h1>
+            <h1><a href="{% url 'home' %}" class="text-dark text-decoration-none">BEANSTALK</a></h1>
 
             <!-- Right dropdown button (authenticated) -->
             {% if user.is_authenticated %}
