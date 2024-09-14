@@ -1,6 +1,6 @@
 from collections import defaultdict
 from django.shortcuts import redirect, render
-from .models import questionBank,QuestionPapers,userAttempts
+from .models import questionBank,QuestionPapers,userAttempts, UserProfile
 # from django.contrib.auth.models import User
 import pandas as pd
 import numpy as np
@@ -10,7 +10,7 @@ from eva01.generateQP import generateQIDS,analyse_usr
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .forms import SignUpForm
+from .forms import SignUpForm, UserForm, UserProfileForm
 
 # Create your views here.
 time_global = 30*60
@@ -197,3 +197,26 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return render(request,'home.html')
+
+
+@login_required
+def profile_settings(request):
+    user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=user)  # Fetch or create UserProfile
+
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('profile_settings')  # Stay on the same page after successful save
+    else:
+        user_form = UserForm(instance=user)
+        profile_form = UserProfileForm(instance=user_profile)
+
+    return render(request, 'profile_settings.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })

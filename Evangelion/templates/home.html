@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,37 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet"> 
 </head>
 <body>
-    {% load static %}
     
-    <div class="m-5"></div>
+    <div class="m-3"></div>
 
     <!-- Flex container for buttons -->
     <div class="d-flex justify-content-between align-items-center px-3">
         <!-- Left circular home button -->
-        <a href="{% url 'home' %}" class="btn btn-info p-0 rounded-circle" style="width:50px;height:50px">
-            <img src="{{ MEDIA_URL }}placeholder.png" alt="" style="width:100%; height:100%;">
+        <a href="{% url 'home' %}" class="btn btn-info p-0 rounded-circle avatar-container">
+            <img src="{% static 'placeholder.png' %}" alt="" class="avatar-img">
         </a>
 
         <!-- Right dropdown button (authenticated) -->
         {% if user.is_authenticated %}
+        
+        <h6 class="text-end-right me-3">Welcome {{ user.username }}</h6>
         <div class="btn-group">
-            <button type="button" class="btn btn-primary p-0 rounded-circle" style="width:50px;height:50px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="btn btn-primary p-0 rounded-circle avatar-container" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <!-- Action button icon or image -->
-                <img src="{{ MEDIA_URL }}placeholder.png" alt="" style="width:100%; height:100%;">
+                <img src="{% if user.userprofile.avatar %}{{ user.userprofile.avatar.url }}{% else %}{% static 'placeholder.png' %}{% endif %}" 
+                     alt="Avatar" class="avatar-img">
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Profile Settings</a> <!-- Add your profile settings link -->
+                <a class="dropdown-item" href="{% url 'profile_settings' %}">Profile Settings</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
             </div>
         </div>
         {% else %}
+        
+        <h6 class="text-end-right me-3">Please Login</h6>
         <!-- Right dropdown button (not authenticated) -->
         <div class="btn-group">
-            <button type="button" class="btn btn-primary p-0 rounded-circle" style="width:50px;height:50px;" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="{{ MEDIA_URL }}placeholder.png" alt="" style="width:100%; height:100%;">
+            <button type="button" class="btn btn-primary p-0 rounded-circle avatar-container" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{% static 'placeholder.png' %}" alt="" class="avatar-img">
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="{% url 'login' %}">Login</a>
@@ -47,13 +53,6 @@
         </div>
         {% endif %}
     </div>
-
-    <!-- Welcome text for authenticated user -->
-    {% if user.is_authenticated %}
-    <h6 class="text-end me-3">Welcome {{ user.username }}</h6>
-    {% else %}
-    <h6 class="text-end me-3">Please Login</h6>
-    {% endif %}
 
     <!-- Start Test button -->
     <div class="m-auto">
