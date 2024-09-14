@@ -1,26 +1,110 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Profile Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Initialize tooltips
+        document.addEventListener('DOMContentLoaded', function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
 </head>
 <body>
-    
-{% block content %}
-    <h2>Profile Settings</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        
-        <h3>Account Information</h3>
-        {{ user_form.as_p }}
-        
-        <h3>Profile Information</h3>
-        {{ profile_form.as_p }}
+    <div class="m-3">
+        <!-- Flex container for buttons -->
+        <div class="d-flex justify-content-between align-items-center px-3">
+            <!-- Left circular home button -->
+            <a href="{% url 'home' %}" class="btn btn-info p-0 rounded-circle avatar-container">
+                <img src="{% static 'placeholder.png' %}" alt="" class="avatar-img">
+            </a>
 
-        <button type="submit">Save Changes</button>
-    </form>
-{% endblock %}
+            <h1>BEANSTALK</h1>
 
+            <!-- Right dropdown button (authenticated) -->
+            {% if user.is_authenticated %}
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary p-0 rounded-circle avatar-container" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{% if user.userprofile.avatar %}{{ user.userprofile.avatar.url }}{% else %}{% static 'placeholder.png' %}{% endif %}" alt="Avatar" class="avatar-img">
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'profile_settings' %}">Profile Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+            {% else %}
+            <h6 class="text-end-right me-3">Please Login</h6>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary p-0 rounded-circle avatar-container" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{% static 'placeholder.png' %}" alt="" class="avatar-img">
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h2>Profile Settings</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <h3>Account Information</h3>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><label for="{{ user_form.username.id_for_label }}">Username:</label></td>
+                        <td>
+                            <input type="text" name="username" id="{{ user_form.username.id_for_label }}" class="form-control" value="{{ user_form.username.value }}" data-bs-toggle="tooltip" title="{{ user_form.username.errors.as_text }}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="{{ user_form.email.id_for_label }}">Email:</label></td>
+                        <td>
+                            <input type="email" name="email" id="{{ user_form.email.id_for_label }}" class="form-control" value="{{ user_form.email.value }}" data-bs-toggle="tooltip" title="{{ user_form.email.errors.as_text }}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Profile Information</h3>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><label for="{{ profile_form.bio.id_for_label }}">Bio:</label></td>
+                        <td>
+                            <textarea name="bio" id="{{ profile_form.bio.id_for_label }}" class="form-control" data-bs-toggle="tooltip" title="{{ profile_form.bio.errors.as_text }}">{{ profile_form.bio.value }}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="{{ profile_form.location.id_for_label }}">Location:</label></td>
+                        <td>
+                            <input type="text" name="location" id="{{ profile_form.location.id_for_label }}" class="form-control" value="{{ profile_form.location.value }}" data-bs-toggle="tooltip" title="{{ profile_form.location.errors.as_text }}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="{{ profile_form.avatar.id_for_label }}">Avatar:</label></td>
+                        <td>
+                            <input type="file" name="avatar" id="{{ profile_form.avatar.id_for_label }}" class="form-control" data-bs-toggle="tooltip" title="{{ profile_form.avatar.errors.as_text }}">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
 </body>
 </html>
