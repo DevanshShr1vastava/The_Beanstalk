@@ -1,0 +1,14 @@
+css
+functionality, routing onto to one way, route blocking out of test
+components folder-> css blocks
+routing, homepage structure, user authentication, user setup, stats page
+
+
+
+
+functionality, routing onto to one way, route blocking out of test:-
+timer must be implemented, test ends only if user submits the test or timer runs out. commit..
+faulty test end, rollback.
+
+
+back shouldn't work, popup on null entry, database rollback on incomplete test
