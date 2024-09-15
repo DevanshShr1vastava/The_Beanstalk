@@ -1,3 +1,4 @@
+{% extends 'layouts/base.html' %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -20,44 +21,13 @@
     </script>
 </head>
 <body>
-    <div class="m-3">
-        <!-- Flex container for buttons -->
-        <div class="d-flex justify-content-between align-items-center px-3">
-            <!-- Left circular home button -->
-            <a href="{% url 'home' %}" class="btn btn-info p-0 rounded-circle avatar-container">
-                <img src="{% static 'placeholder.png' %}" alt="" class="avatar-img">
-            </a>
+    
 
-            <h1><a href="{% url 'home' %}" class="text-dark text-decoration-none">BEANSTALK</a></h1>
+    {% block content %}
 
-            <!-- Right dropdown button (authenticated) -->
-            {% if user.is_authenticated %}
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary p-0 rounded-circle avatar-container" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="{% if user.userprofile.avatar %}{{ user.userprofile.avatar.url }}{% else %}{% static 'placeholder.png' %}{% endif %}" alt="Avatar" class="avatar-img">
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{% url 'profile_settings' %}">Profile Settings</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-                </div>
-            </div>
-            {% else %}
-            <h6 class="text-end-right me-3">Please Login</h6>
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary p-0 rounded-circle avatar-container" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="{% static 'placeholder.png' %}" alt="" class="avatar-img">
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{% url 'login' %}">Login</a>
-                </div>
-            </div>
-            {% endif %}
-        </div>
-    </div>
 
     <div class="container mt-5">
-        <h2>Profile Settings</h2>
+        
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
@@ -83,12 +53,6 @@
             <table class="table">
                 <tbody>
                     <tr>
-                        <td><label for="{{ profile_form.bio.id_for_label }}">Bio:</label></td>
-                        <td>
-                            <textarea name="bio" id="{{ profile_form.bio.id_for_label }}" class="form-control" data-bs-toggle="tooltip" title="{{ profile_form.bio.errors.as_text }}">{{ profile_form.bio.value }}</textarea>
-                        </td>
-                    </tr>
-                    <tr>
                         <td><label for="{{ profile_form.location.id_for_label }}">Location:</label></td>
                         <td>
                             <input type="text" name="location" id="{{ profile_form.location.id_for_label }}" class="form-control" value="{{ profile_form.location.value }}" data-bs-toggle="tooltip" title="{{ profile_form.location.errors.as_text }}">
@@ -106,5 +70,7 @@
             <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>
     </div>
+
+    {% endblock content %}
 </body>
 </html>

@@ -1,0 +1,25 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="d-flex bd-highlight mb-3">
+        <div class="p-2 bd-highlight"><h1>Welcome {{ user.username }}</h1></div>
+        
+        <div class="ms-auto p-2 bd-highlight">
+            <img style = "border-radius:15px; width:100px; height:100px;" src="{% if user.userprofile.avatar %}{{ user.userprofile.avatar.url }}{% else %}{% static 'placeholder.png' %}{% endif %}" 
+            alt="Avatar" class="avatar-img">
+        </div>
+    </div>
+    
+     
+    
+    
+    <p>This page is styled with Soft UI components.</p>
+
+
+    <h2 class="text-center">
+        <a href="{% if user.is_authenticated %}{% url 'arena' %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-success btn-lg">Start Test</a>
+    </h2>
+</div>
+{% endblock content %}

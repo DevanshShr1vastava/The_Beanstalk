@@ -1,5 +1,6 @@
 from collections import defaultdict
 from django.shortcuts import redirect, render
+from django.http import HttpResponse
 from .models import questionBank,QuestionPapers,userAttempts, UserProfile
 # from django.contrib.auth.models import User
 import pandas as pd
@@ -178,7 +179,7 @@ def signup(request):
             return redirect('home')
     else:
         form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'accounts/register.html', {'form': form})
         
 def user_login(request):
     if request.method =='POST':
@@ -189,14 +190,18 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('newHome')
     else:
         form = AuthenticationForm()
-    return render(request,'login.html',{'form':form})
+    return render(request,'accounts/login.html',{'form':form})
 
 def user_logout(request):
     logout(request)
-    return render(request,'home.html')
+    return redirect('/login')
+
+def new_home(request):
+
+    return render(request,"newHome.html")
 
 
 @login_required
