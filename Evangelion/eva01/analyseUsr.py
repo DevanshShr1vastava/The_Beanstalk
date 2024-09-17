@@ -232,6 +232,8 @@ y2 = classified_data['category_encoded']
 #Feature Scaling
 scaler2= StandardScaler()
 x2_scaled = scaler2.fit_transform(X2)
+x2_scaled = pd.DataFrame(x2_scaled, columns=X2.columns) #to avoid the fitted without feature names warning
+
 
 knn_model = KNeighborsClassifier(n_neighbors=5, weights='distance')
 svm_model = SVC(probability = True)

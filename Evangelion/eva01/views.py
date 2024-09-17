@@ -87,30 +87,61 @@ def hyoka(request, qpID, qID):
 def arena(request):
     QB = pd.DataFrame(questionBank.objects.all().values())
 
+    # to get the user and obtain corresponding data
     if request.user.is_authenticated:
         user_id = request.user.id
         username = request.user.username
     
-    questionPaper = generateQIDS(QB)
-    
-    if QuestionPapers.objects.filter(userID = user_id).exists():
-        newQPid = QuestionPapers.objects.filter(userID=user_id).order_by('qpID').last().qpID + 1
-    else:
-        newQPid = 1
-    
-    for question in questionPaper:
-        question_obj = questionBank.objects.get(qID=question) #fetching the question object
-        paper_question = QuestionPapers(
-            userID = request.user,
-            qpID=newQPid,
-            qID=question_obj #saving question object in the QuestionPapers model
-        )
-        paper_question.save()
 
-    first_qp = QuestionPapers.objects.filter(qpID=newQPid, userID = user_id).first()
-    firstQID = first_qp.qID.qID if first_qp else None # Fetch the qID of the first question
+    if QuestionPapers.objects.filter(userID = user_id).exists():
+        # fetch all the user attempts and format it so that the model can work with it 
+
+        usratmpts = pd.DataFrame(userAttempts.objects.filter(userID = user_id).values()).groupby('qID_id').agg(
+            attempts=('answer',list),
+            marked_for_review = ('marked_for_review','first'),
+            time_taken=('time_taken','first'),
+            answer = ('answer','first')
+        ).reset_index()
+
+        # pass the usrAttempt as the input for the topic classification model
+
+        analysis_result = analyse_usr(usratmpts)
+
+        # based on the classification, we obtain the weightage to be increased or deccreased and thus this new dictionary maps it accordingly 
+
+        weight_dict = dict(zip(analysis_result['subdomain'].to_list(),analysis_result['category_encoded'].to_list()))
+
+        # we generate a new questionpaper with the modified weights
+
+        questionPaper = generateQIDS(QB,weight_dict)
+
+    else:
+
+        #when there are no user attempts avaiable then that means a fresh new question paper must be generated without modified weights
+
+        questionPaper = generateQIDS(QB)
     
+    
+    #when confirmed that the test is being taken then only save it in the database
     if request.method == "POST":
+
+        if QuestionPapers.objects.filter(userID = user_id).exists():
+            newQPid = QuestionPapers.objects.filter(userID=user_id).order_by('qpID').last().qpID + 1
+        else:
+            newQPid = 1
+        
+        for question in questionPaper:
+            question_obj = questionBank.objects.get(qID=question) #fetching the question object
+            paper_question = QuestionPapers(
+                userID = request.user,
+                qpID=newQPid,
+                qID=question_obj #saving question object in the QuestionPapers model
+            )
+            paper_question.save()
+
+        first_qp = QuestionPapers.objects.filter(qpID=newQPid, userID = user_id).first()
+        firstQID = first_qp.qID.qID if first_qp else None # Fetch the qID of the first question
+
         # Set session variables consistently before redirecting
         request.session['test_state'] = 'in_progress'
         request.session['test_qpID'] = newQPid
