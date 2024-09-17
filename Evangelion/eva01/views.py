@@ -151,43 +151,6 @@ def arena(request):
     
     return render(request, "arenaMain.html")
 
-@login_required
-def analyse(request):
-    if request.user.is_authenticated:
-        user_id = request.user.id
-        username = request.user.username
-    
-    usratmpts = pd.DataFrame(userAttempts.objects.filter(userID = user_id).values()).groupby('qID_id').agg(
-            attempts=('answer',list),
-            marked_for_review = ('marked_for_review','first'),
-            time_taken=('time_taken','first'),
-            answer = ('answer','first')
-        ).reset_index()
-    
-
-    # print(usratmpts)
-
-
-    analysis_result = analyse_usr(usratmpts)
-
-    # print(analysis_result['subdomain'].to_list())
-    # print(analysis_result['category_encoded'].to_list())
-
-    weight_dict = dict(zip(analysis_result['subdomain'].to_list(),analysis_result['category_encoded'].to_list()))
-    
-    # print(type(weight_dict))
-
-    QB = pd.DataFrame(questionBank.objects.all().values())
-    new_QIDS_non_weighted = generateQIDS(QB)
-    new_QIDS = generateQIDS(QB,weight_dict)
-   
-    print("New QIDS unweighted")
-    print(new_QIDS_non_weighted)
-    print("New QIDS weighted")
-    print(new_QIDS)
-
-    return render(request, "analysis.html")
-
 def home(request):
     if request.session.get('test_state') == 'in_progress':
         qpID = request.session.get('test_qpID')
@@ -207,7 +170,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request,user)
-            return redirect('home')
+            return redirect('newHome')
     else:
         form = SignUpForm()
     return render(request, 'accounts/register.html', {'form': form})
@@ -230,8 +193,8 @@ def user_logout(request):
     logout(request)
     return redirect('/login')
 
-def new_home(request):
 
+def new_home(request):
     return render(request,"newHome.html")
 
 

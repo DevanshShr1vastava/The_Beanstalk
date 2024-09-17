@@ -15,11 +15,11 @@
         <!-- Flex container for buttons -->
         <div class="d-flex justify-content-between align-items-center px-3">
             <!-- Left circular home button -->
-            <a href="{% url 'home' %}" class="btn btn-info p-0 rounded-circle avatar-container">
+            <a href="{% url 'newHome' %}" class="btn btn-info p-0 rounded-circle avatar-container">
                 <img src="{% static 'placeholder.png' %}" alt="" class="avatar-img">
             </a>
             
-            <h1><a href="{% url 'home' %}" class="text-dark text-decoration-none">BEANSTALK</a></h1>
+            <h1><a href="{% url 'newHome' %}" class="text-dark text-decoration-none">BEANSTALK</a></h1>
             <!-- Right dropdown button (authenticated) -->
             {% if user.is_authenticated %}
             

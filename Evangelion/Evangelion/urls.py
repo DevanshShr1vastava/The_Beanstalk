@@ -18,20 +18,19 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings  # Import settings to access MEDIA_URL and MEDIA_ROOT
 from django.conf.urls.static import static  # Import static to serve media during development
-from eva01.views import home, arena, hyoka, test_complete_page, analyse, user_login, signup, user_logout,profile_settings, new_home
+from eva01.views import home, arena, hyoka, test_complete_page, user_login, signup, user_logout,profile_settings, new_home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='home'),
+    # path('', home, name='home'),
     path('arena/', arena, name='arena'),
     path('hyoka/<int:qpID>/<int:qID>', hyoka, name="hyoka"),
     path('test_complete_page/', test_complete_page, name='test_complete_page'),
-    path('analysis/', analyse, name='analyse'),
     path('login/', user_login, name='login'),
     path('signup/', signup, name='signup'),
     path('logout/', user_logout, name='logout'),
     path('profile_settings/', profile_settings, name='profile_settings'),
-    path('newHome/',new_home,name='newHome')
+    path('',new_home,name='newHome')
 ]
 
 # Serve media files during development
