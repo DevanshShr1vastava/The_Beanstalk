@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings  # Import settings to access MEDIA_URL and MEDIA_ROOT
 from django.conf.urls.static import static  # Import static to serve media during development
-from eva01.views import home, arena, hyoka, test_complete_page, user_login, signup, user_logout,profile_settings, new_home
+from eva01.views import home, arena, hyoka, test_complete_page, user_login, signup, user_logout,profile_settings, new_home,user_subjects
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('signup/', signup, name='signup'),
     path('logout/', user_logout, name='logout'),
     path('profile_settings/', profile_settings, name='profile_settings'),
+    path('user_subjects',user_subjects,name='user_subjects'),
     path('',new_home,name='newHome')
 ]
 

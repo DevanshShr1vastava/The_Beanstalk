@@ -28,12 +28,17 @@ class userAttempts(models.Model):
     marked_for_review = models.IntegerField()
     time_taken = models.IntegerField()
 
+class Subject(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
-
+    selected_subjects = models.ManyToManyField(Subject, blank=True)
     def __str__(self):
         return self.user.username
+

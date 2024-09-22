@@ -11,7 +11,7 @@ from eva01.generateQP import generateQIDS,analyse_usr
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .forms import SignUpForm, UserForm, UserProfileForm
+from .forms import SignUpForm, UserForm, UserProfileForm, userSubjectSelectionForm
 
 # Create your views here.
 time_global = 30*60
@@ -112,14 +112,14 @@ def arena(request):
         weight_dict = dict(zip(analysis_result['subdomain'].to_list(),analysis_result['category_encoded'].to_list()))
 
         # we generate a new questionpaper with the modified weights
-
-        questionPaper = generateQIDS(QB,weight_dict)
+        user_profile = UserProfile.objects.get(user=request.user)
+        questionPaper = generateQIDS(QB,user_profile,weight_dict)
 
     else:
 
         #when there are no user attempts avaiable then that means a fresh new question paper must be generated without modified weights
-
-        questionPaper = generateQIDS(QB)
+        user_profile = UserProfile.objects.get(user=request.user)
+        questionPaper = generateQIDS(QB,user_profile)
     
     
     #when confirmed that the test is being taken then only save it in the database
@@ -170,7 +170,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request,user)
-            return redirect('newHome')
+            return redirect('user_subjects')
     else:
         form = SignUpForm()
     return render(request, 'accounts/register.html', {'form': form})
@@ -219,3 +219,18 @@ def profile_settings(request):
         'user_form': user_form,
         'profile_form': profile_form
     })
+
+
+@login_required
+def user_subjects(request):
+
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+    if(request.method == "POST"):
+        form = userSubjectSelectionForm(request.POST, instance = profile)
+        if form.is_valid():
+            form.save()
+            return redirect('user_subjects')
+    else:
+        form = userSubjectSelectionForm(instance = profile)
+
+    return render(request,"subjects_select.html",{'form':form})

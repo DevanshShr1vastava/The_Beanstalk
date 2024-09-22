@@ -1,7 +1,7 @@
 import random
 import pandas as pd
 from eva01.analyseUsr import ensemble_model_QC,ensemble_model_TC,calculate_confidence_level,calculate_correctness_rate,scaler, selected_columns
-from .models import questionBank
+from .models import UserProfile, questionBank
 
 def adjust_weights(weights, subdomain, adjustment):
         if subdomain in weights:
@@ -12,19 +12,11 @@ def adjust_weights(weights, subdomain, adjustment):
                 weights[subdomain] = 1
         return weights
 
-def generateQIDS(QuestionBank,weights_updated=None):
-    # List of selected subdomains
-    selected_subdomain = [
-        'SQL Basics',
-        'Normalization',
-        'SQL Constraints',
-        'Keys',
-        'SQL Functions',
-        'Joins',
-        'Transactions',
-        'Security',
-        'Backup & Recovery'
-    ]
+def generateQIDS(QuestionBank,user,weights_updated=None):
+    #list of the subdomains selected by the user
+    selected_subdomain = list(user.selected_subjects.values_list('name',flat=True))
+   
+
 
     # Mapping the difficulty for each subdomain with a numeric value
     difficultyMap = {'Easy': 1, 'Medium': 2, 'Hard': 3}
