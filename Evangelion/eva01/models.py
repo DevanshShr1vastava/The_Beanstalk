@@ -42,3 +42,8 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+class Result(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.IntegerField()
+    time_taken = models.DurationField()
+    date = models.DateTimeField(auto_now_add=True)

@@ -53,7 +53,19 @@
             {% endif %}
         </div>
 </div>
-    results:<br>
+<div>
+    <h1>Test Completed!</h1>
+    
+    <h2>Your Statistics</h2>
+    <p>Total Attempts: {{ total_attempts }}</p>
+    <p>Average Score: {{ average_score }}</p>
+    <p>Highest Score: {{ highest_score }}</p>
+    <p>Lowest Score: {{ lowest_score }}</p>
+    
+    <h2>Your Progress</h2>
+    <img src="data:image/png;base64,{{ graph }}" alt="User Progress Graph">
+</div>
+
     
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>

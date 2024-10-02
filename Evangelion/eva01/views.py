@@ -1,7 +1,7 @@
 from collections import defaultdict
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .models import questionBank,QuestionPapers,userAttempts, UserProfile
+from .models import questionBank,QuestionPapers,userAttempts, UserProfile, Result
 # from django.contrib.auth.models import User
 import pandas as pd
 import numpy as np
@@ -12,6 +12,10 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, UserForm, UserProfileForm, userSubjectSelectionForm
+from django.db.models import Avg, Max, Min, Count, Sum
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
 
 # Create your views here.
 time_global = 30*60
@@ -229,8 +233,65 @@ def user_subjects(request):
         form = userSubjectSelectionForm(request.POST, instance = profile)
         if form.is_valid():
             form.save()
-            return redirect('user_subjects')
+            return redirect('')
     else:
         form = userSubjectSelectionForm(instance = profile)
 
     return render(request,"subjects_select.html",{'form':form})
+
+
+
+def test_complete(request):
+    user = request.user
+    
+    # Ensure the user is authenticated
+    if not user.is_authenticated:
+        return redirect('login')  # Redirect to login if not authenticated
+
+    # Get the last 10 results for the user
+    results = Result.objects.filter(user=user).order_by('-date')[:10]
+
+    # Check if there are any results
+    if not results.exists():
+        return render(request, 'test_completge.html', {
+            'graph': '',
+            'total_attempts': 0,
+            'average_score': 'N/A',
+            'highest_score': 'N/A',
+            'lowest_score': 'N/A',
+        })
+
+    # Prepare data for statistics
+    total_attempts = results.count()
+    average_score = results.aggregate(Avg('score'))['score__avg']
+    highest_score = results.aggregate(Max('score'))['score__max']
+    lowest_score = results.aggregate(Min('score'))['score__min']
+
+    # Create plot
+    dates = [result.date for result in results]
+    scores = [result.score for result in results]
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(dates, scores, marker='o', linestyle='-', color='b')
+    plt.title('User Progress Over Last Attempts')
+    plt.xlabel('Date')
+    plt.ylabel('Score')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+
+    # Save the plot to a BytesIO object
+    buf = BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
+    buf.close()
+
+    context = {
+        'graph': image_base64,
+        'total_attempts': total_attempts,
+        'average_score': average_score,
+        'highest_score': highest_score,
+        'lowest_score': lowest_score,
+    }
+
+    return render(request, 'test_completge.html', context)
