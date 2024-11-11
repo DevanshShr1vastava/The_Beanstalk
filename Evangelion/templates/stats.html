@@ -1,0 +1,82 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <h2>User Lifetime Accuracy</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Lifetime Statistics</h5>
+            <p class="card-text"><strong>Total Attempts:</strong> {{ total_attempts }}</p>
+            <p class="card-text"><strong>Correct Attempts:</strong> {{ correct_attempts }}</p>
+            <p class="card-text"><strong>Overall Accuracy:</strong> {{ accuracy }}%</p>
+        </div>
+    </div>
+
+    <h3 class="mt-4">Accuracy Over Tests</h3>
+    <canvas id="accuracyChart" width="400" height="200"></canvas>
+
+    <!-- Domain-wise accuracy table -->
+    <h4 class="mt-4">Domain-wise Accuracy</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Domain</th>
+                <th scope="col">Attempts</th>
+                <th scope="col">Accuracy (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for domain in domains_data %}
+            <tr>
+                <td>{{ domain.domain_name }}</td>
+                <td>{{ domain.total_attempts }}</td>
+                <td>{{ domain.accuracy_percentage }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Include Chart.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Prepare data for the chart
+    const labels = {{ labels|safe }};
+    const accuracyScores = {{ accuracy_scores|safe }};
+    
+    // Create the chart
+    const ctx = document.getElementById('accuracyChart').getContext('2d');
+    const accuracyChart = new Chart(ctx, {
+        type: 'line',  // Line chart for showing trends over time
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Accuracy (%)',
+                data: accuracyScores,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                },
+                tooltip: {
+                    enabled: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

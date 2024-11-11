@@ -9,7 +9,7 @@ class questionBank(models.Model):
     op2 = models.CharField(max_length=255)
     op3 = models.CharField(max_length=255)
     op4 = models.CharField(max_length=255)
-    CorrectAnswer = models.CharField(max_length=255)
+    CorrectAnswer = models.CharField(max_length=255)    
     option_number = models.IntegerField()
     difficulty = models.CharField(max_length=255)
     domain = models.CharField(max_length=255)
@@ -27,6 +27,10 @@ class userAttempts(models.Model):
     answer = models.IntegerField()
     marked_for_review = models.IntegerField()
     time_taken = models.IntegerField()
+    
+    
+
+
 
 class Subject(models.Model):
     name = models.CharField(max_length=255)
@@ -42,8 +46,25 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-class Result(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    score = models.IntegerField()
-    time_taken = models.DurationField()
-    date = models.DateTimeField(auto_now_add=True)
+    
+    
+class Questions(models.Model):
+    question_text = models.TextField()
+    topic = models.CharField(max_length=50)
+    difficulty = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.question_text
+    
+    
+class Results(models.Model):
+    user_id = models.IntegerField()
+    question_id = models.ForeignKey(Questions, on_delete=models.CASCADE)
+    score = models.FloatField()
+    attempt_time = models.DateTimeField()
+    is_correct = models.BooleanField(default=False)
+
+    
+    
+    
+    

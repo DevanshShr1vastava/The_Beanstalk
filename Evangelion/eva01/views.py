@@ -1,7 +1,7 @@
 from collections import defaultdict
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .models import questionBank,QuestionPapers,userAttempts, UserProfile, Result
+from .models import questionBank,QuestionPapers,userAttempts, UserProfile
 # from django.contrib.auth.models import User
 import pandas as pd
 import numpy as np
@@ -12,10 +12,14 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, UserForm, UserProfileForm, userSubjectSelectionForm
-from django.db.models import Avg, Max, Min, Count, Sum
+from django.db import models
+from django.db.models import Avg, Max, Min, Count, Sum, Q
+from django.shortcuts import render, get_object_or_404
+from .models import Results, Questions
 import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
+from django.urls import reverse
 
 # Create your views here.
 time_global = 30*60
@@ -72,7 +76,8 @@ def hyoka(request, qpID, qID):
 
         if(qID == last_question_id):
             request.session['test_state'] = 'completed'
-            return redirect('test_complete_page/')
+            return redirect(reverse('test_complete_page', kwargs={'test_id': qpID}))  # Ensure kwargs is passed correctly
+
         else:
             #Get the next question in the paper
 
@@ -163,10 +168,6 @@ def home(request):
      
     return render(request, "home.html")
 
-@login_required
-def test_complete_page(request):
-    
-    return render(request,"test_complete_page.html")
 
 def signup(request):
     if request.method == 'POST':
@@ -240,58 +241,128 @@ def user_subjects(request):
     return render(request,"subjects_select.html",{'form':form})
 
 
+def test_results(request, test_id):
+    # Fetch the results for the specific test
+    results = Results.objects.filter(user_id=request.user.id, id=test_id)
 
-def test_complete(request):
-    user = request.user
-    
-    # Ensure the user is authenticated
-    if not user.is_authenticated:
-        return redirect('login')  # Redirect to login if not authenticated
-
-    # Get the last 10 results for the user
-    results = Result.objects.filter(user=user).order_by('-date')[:10]
-
-    # Check if there are any results
-    if not results.exists():
-        return render(request, 'test_completge.html', {
-            'graph': '',
-            'total_attempts': 0,
-            'average_score': 'N/A',
-            'highest_score': 'N/A',
-            'lowest_score': 'N/A',
-        })
-
-    # Prepare data for statistics
-    total_attempts = results.count()
-    average_score = results.aggregate(Avg('score'))['score__avg']
-    highest_score = results.aggregate(Max('score'))['score__max']
-    lowest_score = results.aggregate(Min('score'))['score__min']
-
-    # Create plot
-    dates = [result.date for result in results]
+    # Prepare data for the graph
+    labels = [result.question_id.question_text for result in results]
     scores = [result.score for result in results]
 
-    plt.figure(figsize=(10, 5))
-    plt.plot(dates, scores, marker='o', linestyle='-', color='b')
-    plt.title('User Progress Over Last Attempts')
-    plt.xlabel('Date')
-    plt.ylabel('Score')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
+    context = {
+        'labels': labels,
+        'scores': scores,
+        'test_id': test_id
+    }
+    return render(request, 'results.html', context)
 
-    # Save the plot to a BytesIO object
-    buf = BytesIO()
-    plt.savefig(buf, format='png')
-    buf.seek(0)
-    image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
-    buf.close()
+
+from django.db.models import Count
+
+@login_required
+def lifetime_accuracy(request):
+    user_id = request.user.id
+    
+    # Fetch all user attempts
+    total_attempts = userAttempts.objects.filter(userID=user_id).count()
+    correct_attempts = userAttempts.objects.filter(userID=user_id, answer=1).count()
+
+    # Calculate overall lifetime accuracy
+    if total_attempts > 0:
+        accuracy = (correct_attempts / total_attempts) * 100
+    else:
+        accuracy = 0
+
+    # Prepare data for the accuracy graph
+    # Group attempts by test papers to show accuracy for each test
+    accuracy_data = (
+        userAttempts.objects.filter(userID=user_id)
+        .values('qpID__qpID')  # Group by test ID
+        .annotate(
+            total=Count('answer'),
+            correct=Count('answer', filter=models.Q(answer=1))
+        )
+        .order_by('qpID__qpID')
+    )
+    
+    # Prepare data for the graph
+    labels = [f"Test {item['qpID__qpID']}" for item in accuracy_data]
+    accuracy_scores = [
+        round((item['correct'] / item['total']) * 100, 2) if item['total'] > 0 else 0 
+        for item in accuracy_data
+    ]
+
+    # Prepare domain-wise accuracy data
+    domain_data = (
+        userAttempts.objects.filter(userID=user_id)
+        .values('qID__domain')  # Group by domain name
+        .annotate(
+            total=Count('answer'),
+            correct=Count('answer', filter=models.Q(answer=1))
+        )
+    )
+    
+    # Prepare domain list for the table
+    domains_data = [
+        {
+            'domain_name': item['qID__domain'],
+            'total_attempts': item['total'],
+            'accuracy_percentage': round((item['correct'] / item['total']) * 100, 2) if item['total'] > 0 else 0
+        }
+        for item in domain_data
+    ]
 
     context = {
-        'graph': image_base64,
         'total_attempts': total_attempts,
-        'average_score': average_score,
-        'highest_score': highest_score,
-        'lowest_score': lowest_score,
+        'correct_attempts': correct_attempts,
+        'accuracy': round(accuracy, 2),
+        'labels': labels,
+        'accuracy_scores': accuracy_scores,
+        'domains_data': domains_data,  # Pass the domain-wise data
     }
 
-    return render(request, 'test_completge.html', context)
+    return render(request, 'stats.html', context)
+
+
+
+@login_required
+def test_complete_page(request, test_id):
+    user = request.user
+
+    # Retrieve the specific QuestionPaper instance by test_id
+    test_qp = get_object_or_404(QuestionPapers, qpID=test_id)
+
+    # Calculate the total and correct attempts for this specific test
+    total_attempts = userAttempts.objects.filter(userID=user, qpID=test_qp).count()
+    correct_attempts = userAttempts.objects.filter(userID=user, qpID=test_qp, answer=1).count()
+    incorrect_attempts = total_attempts - correct_attempts
+
+    # Prepare data for the pie chart
+    labels = ['Correct', 'Incorrect']
+    sizes = [correct_attempts, incorrect_attempts]
+    colors = ['#4CAF50', '#FF5722']
+    explode = (0.1, 0)  # explode the 'Correct' slice
+
+    # Create pie chart
+    plt.figure(figsize=(6, 6))
+    plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%', shadow=True, startangle=140)
+    plt.title(f'Accuracy for {test_qp.name}')  # Title with the test name
+
+    # Save the pie chart to a BytesIO object
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    image_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    buffer.close()
+    plt.close()
+
+    # Context to pass to the template
+    context = {
+        'image_base64': image_base64,
+        'total_attempts': total_attempts,
+        'correct_attempts': correct_attempts,
+        'incorrect_attempts': incorrect_attempts,
+        'test_qp': test_qp,  # Pass test details to the template
+    }
+
+    return render(request, "test_complete_page.html", context)
