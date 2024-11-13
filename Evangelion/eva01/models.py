@@ -30,7 +30,7 @@ class userAttempts(models.Model):
     
     
 
-
+     
 
 class Subject(models.Model):
     name = models.CharField(max_length=255)
@@ -55,16 +55,4 @@ class Questions(models.Model):
 
     def __str__(self):
         return self.question_text
-    
-    
-class Results(models.Model):
-    user_id = models.IntegerField()
-    question_id = models.ForeignKey(Questions, on_delete=models.CASCADE)
-    score = models.FloatField()
-    attempt_time = models.DateTimeField()
-    is_correct = models.BooleanField(default=False)
-
-    
-    
-    
     

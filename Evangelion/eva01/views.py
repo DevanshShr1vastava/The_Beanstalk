@@ -15,8 +15,9 @@ from .forms import SignUpForm, UserForm, UserProfileForm, userSubjectSelectionFo
 from django.db import models
 from django.db.models import Avg, Max, Min, Count, Sum, Q
 from django.shortcuts import render, get_object_or_404
-from .models import Results, Questions
+from .models import Questions
 import matplotlib.pyplot as plt
+from django.db.models import Count
 from io import BytesIO
 import base64
 from django.urls import reverse
@@ -48,7 +49,7 @@ def hyoka(request, qpID, qID):
     progress_percent = 100 - round(((progress - 1) / total_questions) * 100)
     
     if not question:
-        return redirect('home') #if question is not found, redirect to home
+        return redirect('newHome') #if question is not found, redirect to home
     
     if(request.method == "POST"):
         attemptInfo = request.POST
@@ -234,30 +235,12 @@ def user_subjects(request):
         form = userSubjectSelectionForm(request.POST, instance = profile)
         if form.is_valid():
             form.save()
-            return redirect('')
+            return redirect('newHome')
     else:
         form = userSubjectSelectionForm(instance = profile)
 
     return render(request,"subjects_select.html",{'form':form})
 
-
-def test_results(request, test_id):
-    # Fetch the results for the specific test
-    results = Results.objects.filter(user_id=request.user.id, id=test_id)
-
-    # Prepare data for the graph
-    labels = [result.question_id.question_text for result in results]
-    scores = [result.score for result in results]
-
-    context = {
-        'labels': labels,
-        'scores': scores,
-        'test_id': test_id
-    }
-    return render(request, 'results.html', context)
-
-
-from django.db.models import Count
 
 @login_required
 def lifetime_accuracy(request):
@@ -326,14 +309,14 @@ def lifetime_accuracy(request):
 
 
 @login_required
-def test_complete_page(request, test_id):
+def test_complete_page(request):
     user = request.user
 
     # Retrieve the specific QuestionPaper instance by test_id
-    test_qp = get_object_or_404(QuestionPapers, qpID=test_id)
+    test_qp = get_object_or_404(QuestionPapers)
 
     # Calculate the total and correct attempts for this specific test
-    total_attempts = userAttempts.objects.filter(userID=user, qpID=test_qp).count()
+    total_attempts = userAttempts.objects.filter(userID=user, qpID_id=test_qp).count()
     correct_attempts = userAttempts.objects.filter(userID=user, qpID=test_qp, answer=1).count()
     incorrect_attempts = total_attempts - correct_attempts
 

@@ -6,6 +6,10 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.ensemble import VotingClassifier
 from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_score
+from sklearn.metrics import confusion_matrix, classification_report
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 from sklearn.preprocessing import LabelEncoder
 
 def calculate_correctness_rate(user_attempts):
@@ -152,11 +156,49 @@ kf = StratifiedKFold(n_splits = 5, shuffle=True, random_state = 32)
 # evaluate ensemble models with cross validation
 
 cv_scores = cross_val_score(ensemble_model_QC, x_scaled, y, cv = kf, scoring='accuracy')
+print("Mean Cross Validation Score for Question Classification model : ",cv_scores)
+print("Mean Cross Validation Score for Question Classification model : ",cv_scores.mean())
+
+#confusion matrix
+
+# # Initialize an empty confusion matrix
+# cumulative_conf_matrix = np.zeros((2, 2))  # Adjust for binary classification (2 classes)
+
+# # Perform k-fold cross-validation
+# for train_index, test_index in kf.split(x_scaled, y):
+#     X_train, X_test = x_scaled[train_index], x_scaled[test_index]
+#     y_train, y_test = y.iloc[train_index], y.iloc[test_index]
+
+#     # Train the voting classifier on the training fold
+#     ensemble_model_QC.fit(X_train, y_train)
+
+#     # Predict the labels for the test fold
+#     y_pred = ensemble_model_QC.predict(X_test)
+
+#     # Compute confusion matrix for the current fold
+#     fold_conf_matrix = confusion_matrix(y_test, y_pred)
+
+#     # Accumulate confusion matrices
+#     cumulative_conf_matrix += fold_conf_matrix
+
+# # Calculate the average confusion matrix (optional, or just use cumulative one)
+# average_conf_matrix = cumulative_conf_matrix / 5  # Divide by number of folds if needed
+
+# # Print the confusion matrix
+# print("Cumulative Confusion Matrix:")
+# print(cumulative_conf_matrix)
+
+# # Visualize the confusion matrix
+# plt.figure(figsize=(6,4))
+# sns.heatmap(cumulative_conf_matrix, annot=True, fmt='g', cmap='Blues', xticklabels=['Class 0', 'Class 1'], yticklabels=['Class 0', 'Class 1'])
+# plt.title('Confusion Matrix (K-Folds)')
+# plt.xlabel('Predicted Label')
+# plt.ylabel('True Label')
+# plt.show()
 
 # Print cross-validation scores
 # print(f'Cross-validation scores: {cv_scores}')
-# print(f'Mean accuracy: {cv_scores.mean()}')
-
+# print(f'Mean accuracy: {cv_scores.mean
 # Fit ensemble model to the entire training set
 
 ensemble_model_QC.fit(x_scaled, y)
@@ -252,9 +294,11 @@ ensemble_model_TC = VotingClassifier(estimators = [
 
 kf2 = StratifiedKFold(n_splits = 5, shuffle=True, random_state = 32)
 
+
 # Evaluate the ensemble model with cross-validation
 cv_scores_TC = cross_val_score(ensemble_model_TC, x2_scaled, y2, cv=kf2, scoring='accuracy')
-
+print("Cross Validation Score for Topic Classification model : ",cv_scores_TC)
+print("Mean Cross Validation Score for Topic Classification model : ",cv_scores_TC.mean())
 
 # Fit the ensemble model to the entire dataset
 ensemble_model_TC.fit(x2_scaled, y2)
