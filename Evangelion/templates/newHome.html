@@ -15,12 +15,170 @@
      
     
     
-    <p><b>BEANSTALK</b>
-    <br> An adaptive learning platform which grows as <i>YOU</i> grow</p>
+    
+    <div class="d-grid gap-2">
 
+        <h2 class="text-center">
+            <a href="{% if user.is_authenticated %}{% url 'arena' %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-success btn-lg">Start Test</a>
+        </h2>
+        
+    </div>
+    
+    <div class="row">
+            <h2 class="display-6">Focus Areas</h2>
+            {% for i in DisplayData.focus_areas %}
+            {% if forloop.counter == 1 %}
+            <div class="col-sm-6 col-md-3">
+                <div class="card text-bg-danger card-stats card-round">
+                  <div class="card-body">
+                    <div class="row g-0">
+                      <div class="col-md-3">
+                        <div
+                          class=""
+                        >
+                          <i class="fas fa-2xl fa-circle-notch fa-spin" style="--fa-animation-duration: 10s;"></i>
+                        </div>
+                      </div>
+                      <div class="col-md-9 col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <h4 class="lead">{{ i.qID__subdomain }}</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% elif forloop.counter == 2 %}
+            <div class="col-sm-6 col-md-3">
+                <div class="card text-bg-warning card-stats card-round">
+                  <div class="card-body">
+                    <div class="row g-0">
+                      <div class="col-md-3">
+                        <div
+                          class=""
+                        >
+                          <i class="fas fa-2xl fa-circle-notch fa-spin" style="--fa-animation-duration: 10s;"></i>
+                        </div>
+                      </div>
+                      <div class="col-md-9 col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <h4 class="lead">{{ i.qID__subdomain }}</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% elif forloop.counter == 3 %}
+            <div class="col-sm-6 col-md-3">
+                <div class="card text-bg-secondary card-stats card-round">
+                  <div class="card-body">
+                    <div class="row g-0">
+                      <div class="col-md-3">
+                        <div
+                          class=""
+                        >
+                          <i class="fas fa-2xl fa-circle-notch fa-spin" style="--fa-animation-duration: 10s;"></i>
+                        </div>
+                      </div>
+                      <div class="col-md-9 col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <h4 class="lead">{{ i.qID__subdomain }}</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% elif forloop.counter == 4 %}
+            <div class="col-sm-6 col-md-3">
+                <div class="card text-bg-info card-stats card-round">
+                  <div class="card-body">
+                    <div class="row g-0">
+                      <div class="col-md-3">
+                        <div
+                          class=""
+                        >
+                          <i class="fas fa-2xl fa-circle-notch fa-spin" style="--fa-animation-duration: 10s;"></i>
+                        </div>
+                      </div>
+                      <div class="col-md-9 col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <h4 class="lead">{{ i.qID__subdomain }}</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            {% endfor %}
+          
+      </div>
 
-    <h2 class="text-center">
-        <a href="{% if user.is_authenticated %}{% url 'arena' %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-success btn-lg">Start Test</a>
-    </h2>
+    <div class="row">
+        <div class="col-4">
+            <h4 class="mt-4 display-6">User's Topics</h4>
+            <table class="table table-striped">
+                <tbody>
+                    {% for d in DisplayData.selected_subjects %}
+                    <tr>
+                        <td>{{ d.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-8">
+            <h3 class="mt-4 display-6">Subjects Most Worked on</h3>
+            <canvas id="mostWorkChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+    
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Prepare data for the chart
+    const labels = {{ DisplayData.chart_subdomains|safe }};
+    const work_count = {{ DisplayData.chart_counts|safe }};
+    
+    // Create the chart
+    const ctx = document.getElementById('mostWorkChart').getContext('2d');
+    const accuracyChart = new Chart(ctx, {
+        type: 'line',  // Line chart for showing trends over time
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Subdomain',
+                data: work_count,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                },
+                tooltip: {
+                    enabled: true
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+</script>
+
+
 {% endblock content %}

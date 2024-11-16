@@ -35,6 +35,26 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <h4 class="mt-4">Subdomain-wise Accuracy</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Subdomain</th>
+                <th scope="col">Attempts</th>
+                <th scope="col">Accuracy (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sd in subdomains_data %}
+            <tr>
+                <td>{{ sd.qID__subdomain }}</td>
+                <td>{{ sd.total_attempts }}</td>
+                <td>{{ sd.accuracy|floatformat:2 }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 <!-- Include Chart.js from CDN -->

@@ -1,7 +1,11 @@
 from collections import defaultdict
+from django.forms import FloatField
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .models import questionBank,QuestionPapers,userAttempts, UserProfile
+from django.db.models import Avg, Case, When, F, FloatField, ExpressionWrapper
+
+
 # from django.contrib.auth.models import User
 import pandas as pd
 import numpy as np
@@ -201,7 +205,28 @@ def user_logout(request):
 
 
 def new_home(request):
-    return render(request,"newHome.html")
+
+    most_worked = (
+        userAttempts.objects.filter(userID=request.user)
+        .values('qID__subdomain')
+        .annotate(subdomain_count=Count('qID__subdomain'))
+        .order_by('-subdomain_count')
+    )
+    chart_subdomains = [item['qID__subdomain'] for item in most_worked]
+    chart_counts = [item['subdomain_count'] for item in most_worked]
+
+    focus_areas = (
+        userAttempts.objects.filter(userID=request.user)
+        .exclude(answer=F('qID__option_number'))  # Incorrect answers
+        .values('qID__subdomain')
+        .annotate(wrong_count=Count('qID__subdomain'))
+        .order_by('-wrong_count')[:4]  # Top 4 areas
+    )
+
+    selected_subjects = request.user.userprofile.selected_subjects.all()
+
+
+    return render(request,"newHome.html",{"DisplayData":{"most_worked":most_worked,"focus_areas": focus_areas, "selected_subjects":selected_subjects,"chart_subdomains":chart_subdomains,"chart_counts":chart_counts}})
 
 
 @login_required
@@ -244,7 +269,22 @@ def user_subjects(request):
 
 @login_required
 def lifetime_accuracy(request):
-    user_id = request.user.id
+    user_id = request.user
+    subdomain_accuracy = (
+        userAttempts.objects.filter(userID=request.user)
+        .values('qID__subdomain')
+        .annotate(
+            accuracy=ExpressionWrapper(100*Avg(
+                Case(
+                    When(answer=F('qID__option_number'), then=1),
+                    default=0,
+                    output_field=FloatField()
+                )
+            ),output_field=FloatField()
+),
+            total_attempts=Count('id')
+        )
+    )
     
     # Fetch all user attempts
     total_attempts = userAttempts.objects.filter(userID=user_id).count()
@@ -302,6 +342,7 @@ def lifetime_accuracy(request):
         'labels': labels,
         'accuracy_scores': accuracy_scores,
         'domains_data': domains_data,  # Pass the domain-wise data
+        'subdomains_data':subdomain_accuracy,
     }
 
     return render(request, 'stats.html', context)
@@ -319,6 +360,7 @@ def test_complete_page(request):
     total_attempts = userAttempts.objects.filter(userID=user, qpID_id=test_qp).count()
     correct_attempts = userAttempts.objects.filter(userID=user, qpID=test_qp, answer=1).count()
     incorrect_attempts = total_attempts - correct_attempts
+    review_count = userAttempts.objects.filter(userID=user, marked_for_review=1).count()
 
     # Prepare data for the pie chart
     labels = ['Correct', 'Incorrect']
