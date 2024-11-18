@@ -81,7 +81,7 @@ def hyoka(request, qpID, qID):
 
         if(qID == last_question_id):
             request.session['test_state'] = 'completed'
-            return redirect(reverse('test_complete_page', kwargs={'test_id': qpID}))  # Ensure kwargs is passed correctly
+            return redirect('test_complete_page')  # Ensure kwargs is passed correctly
 
         else:
             #Get the next question in the paper
@@ -205,7 +205,8 @@ def user_logout(request):
 
 
 def new_home(request):
-
+    if(not request.user.is_authenticated):
+       return redirect('login')
     most_worked = (
         userAttempts.objects.filter(userID=request.user)
         .values('qID__subdomain')
@@ -353,40 +354,37 @@ def lifetime_accuracy(request):
 def test_complete_page(request):
     user = request.user
 
+    #retrieve the latest question paper ID
+    latestQPid = QuestionPapers.objects.filter(userID_id=user).order_by('-id').first().qpID
+
     # Retrieve the specific QuestionPaper instance by test_id
-    test_qp = get_object_or_404(QuestionPapers)
+    test_qp = QuestionPapers.objects.filter(userID_id=user,qpID=latestQPid)
 
     # Calculate the total and correct attempts for this specific test
-    total_attempts = userAttempts.objects.filter(userID=user, qpID_id=test_qp).count()
-    correct_attempts = userAttempts.objects.filter(userID=user, qpID=test_qp, answer=1).count()
-    incorrect_attempts = total_attempts - correct_attempts
-    review_count = userAttempts.objects.filter(userID=user, marked_for_review=1).count()
-
-    # Prepare data for the pie chart
-    labels = ['Correct', 'Incorrect']
-    sizes = [correct_attempts, incorrect_attempts]
-    colors = ['#4CAF50', '#FF5722']
-    explode = (0.1, 0)  # explode the 'Correct' slice
-
-    # Create pie chart
-    plt.figure(figsize=(6, 6))
-    plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%', shadow=True, startangle=140)
-    plt.title(f'Accuracy for {test_qp.name}')  # Title with the test name
-
-    # Save the pie chart to a BytesIO object
-    buffer = BytesIO()
-    plt.savefig(buffer, format='png')
-    buffer.seek(0)
-    image_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
-    buffer.close()
-    plt.close()
-
-    # Context to pass to the template
+    total_attempts = QuestionPapers.objects.filter(userID_id=user, qpID=latestQPid).count()
+    correct_attempts = userAttempts.objects.filter(userID_id = user, qpID_id__qpID = latestQPid, answer = 1).count()
+    incorrect_attempts = userAttempts.objects.filter(userID_id = user, qpID_id__qpID = latestQPid, answer = 0).count()
+    review_count = userAttempts.objects.filter(userID=user,qpID_id__qpID = latestQPid, marked_for_review=1).count()
+    review_count_non = userAttempts.objects.filter(userID=user,qpID_id__qpID = latestQPid, marked_for_review=0).count()
+    
+    questions_with_details = userAttempts.objects.filter(
+        qpID_id__qpID=latestQPid, answer = 0
+    ).select_related('qID_id').annotate(
+        question_text=F('qID_id__questions'),       # Annotate the question text
+        
+        review_status=F('marked_for_review'),   # Annotate review status
+        correct_answer=F('qID_id__CorrectAnswer')  # Annotate the correct answer
+    ).values(
+        'question_text', 'review_status', 'correct_answer'
+    )
     context = {
-        'image_base64': image_base64,
+        # 'image_base64': image_base64,
         'total_attempts': total_attempts,
         'correct_attempts': correct_attempts,
         'incorrect_attempts': incorrect_attempts,
+        'marked_for_review' : review_count,
+        'marked_for_review_non':review_count_non,
+        'review_attempt':questions_with_details,
         'test_qp': test_qp,  # Pass test details to the template
     }
 

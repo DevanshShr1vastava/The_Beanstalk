@@ -2,12 +2,142 @@
 {% load static %}
 {% block content %}
   <div class="container">
-    <h2>Test Complete: {{ test_qp.name }}</h2>
-    <p>Your accuracy: {{ correct_attempts }} out of {{ total_attempts }} attempts</p>
+    <h2>Test Complete</h2>
+    
 
     <!-- Display the pie chart -->
-    <img src="data:image/png;base64,{{ image_base64 }}" alt="Test Accuracy Graph" />
+    <!-- <img src="data:image/png;base64,{{ image_base64 }}" alt="Test Accuracy Graph" /> -->
+    <div class="row">
 
-    <a href="{% url 'home' %}" class="btn btn-primary">Go to Home</a>
+    
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">Answers</div>
+          <div class="chart-container">
+            <canvas
+              id="pieChart"
+              
+            ></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">Reviews</div>
+          <div class="chart-container">
+            <canvas
+              id="pieChart2"
+              
+            ></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  </div>
+  
+  <div class="row">
+    <div class="container-fluid mx-2">
+      <h2>Incorrect Answers From this attempt</h2>
+      {% for question in review_attempt %}
+      <div class="card mb-3" style="max-width:120ch;">
+        <div class="card-body">
+          <p class="card-text"><strong>Question:</strong> {{ question.question_text }}</p>
+          <p class="card-text"><strong>Marked for Review:</strong> {% if question.review_status %}Yes{% else %}No{% endif %}</p>
+          <p class="card-text"><strong>Correct Answer:</strong> {{ question.correct_answer }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    
+    
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+
+    var myPieChart = new Chart(pieChart, {
+        type: "pie",
+        data: {
+          datasets: [
+            {
+              data: [{{correct_attempts|safe}},{{incorrect_attempts|safe}}],
+              backgroundColor: ["#4fdfe6", "#f3545d", "#fdaf4b"],
+              borderWidth: 0,
+            },
+          ],
+          labels: ["Correct", "Incorrect"],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            position: "bottom",
+            labels: {
+              fontColor: "rgb(154, 154, 154)",
+              fontSize: 11,
+              usePointStyle: true,
+              padding: 5,
+            },
+          },
+          pieceLabel: {
+            render: "percentage",
+            fontColor: "white",
+            fontSize: 14,
+          },
+          tooltips: false,
+          layout: {
+            padding: {
+              left: 5,
+              right: 5,
+              top: 5,
+              bottom: 5,
+            },
+          },
+        },
+      });
+      var myPieChart2 = new Chart(pieChart2, {
+        type: "pie",
+        data: {
+          datasets: [
+            {
+              data: [{{marked_for_review|safe}},{{marked_for_review_non|safe}}],
+              backgroundColor: ["#1d7af3", "#4fe656", "#fdaf4b"],
+              borderWidth: 0,
+            },
+          ],
+          labels: ["Marked For Review", "Non Review"],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            position: "bottom",
+            labels: {
+              fontColor: "rgb(154, 154, 154)",
+              fontSize: 11,
+              usePointStyle: true,
+              padding: 5,
+            },
+          },
+          pieceLabel: {
+            render: "percentage",
+            fontColor: "white",
+            fontSize: 14,
+          },
+          tooltips: false,
+          layout: {
+            padding: {
+              left: 5,
+              right: 5,
+              top: 5,
+              bottom: 5,
+            },
+          },
+        },
+      });
+  </script>
 {% endblock %}
